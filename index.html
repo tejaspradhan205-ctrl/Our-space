@@ -1,170 +1,280 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our-space</title><style>
+<title>Our-space</title>
+
+<style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
-background:#f8f5f1;
-color:#333;
+background:#f8f4ee;
+color:#3e3028;
 }
 
-#welcome,
-#passwordPage,
-#mainSite{
+.hidden{
+display:none;
+}
+
+.screen{
 min-height:100vh;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-padding:20px;
+padding:25px;
 text-align:center;
 }
 
-.card{
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
+.hero{
 width:100%;
-max-width:400px;
+max-width:420px;
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+animation:fadeIn .8s;
 }
 
-h1{
-margin-bottom:15px;
+.hero h1{
+font-size:38px;
+margin-bottom:10px;
 }
 
-p{
+.hero p{
 line-height:1.6;
+color:#666;
 }
 
-button{
-margin-top:15px;
-padding:12px 24px;
+.btn{
+margin-top:20px;
 border:none;
-border-radius:12px;
-background:#d8c7b6;
-color:#222;
+padding:14px 28px;
+border-radius:15px;
+background:#d9a5a5;
+color:white;
 font-size:16px;
 cursor:pointer;
 }
 
-button:hover{
-opacity:0.9;
-}
-
 input{
 width:100%;
-padding:12px;
-margin-top:10px;
+padding:14px;
+border-radius:12px;
 border:1px solid #ddd;
-border-radius:10px;
-font-size:16px;
-}
-
-#passwordPage,
-#mainSite{
-display:none;
-}
-
-.header{
-padding:30px 20px;
-text-align:center;
-}
-
-.section{
-background:white;
-margin:15px;
-padding:20px;
-border-radius:18px;
-box-shadow:0 6px 15px rgba(0,0,0,0.05);
-}
-
-.section h2{
-margin-bottom:10px;
-}
-
-.music-player{
 margin-top:15px;
-padding:15px;
-background:#faf7f3;
-border-radius:15px;
 }
 
-footer{
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+.main{
+padding:20px;
+padding-bottom:90px;
+}
+
+.profile{
+background:white;
+border-radius:25px;
+padding:25px;
 text-align:center;
-padding:30px;
-font-size:14px;
-color:#777;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
-</style></head><body><div id="welcome">
-<div class="card">
+
+.profile img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid #eadbc8;
+}
+
+.profile h2{
+margin-top:15px;
+}
+
+.quote{
+margin-top:10px;
+color:#666;
+font-style:italic;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+margin-top:18px;
+box-shadow:0 6px 15px rgba(0,0,0,.06);
+}
+
+.card h3{
+margin-bottom:8px;
+}
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:white;
+display:flex;
+justify-content:space-around;
+padding:14px;
+box-shadow:0 -5px 15px rgba(0,0,0,.08);
+}
+
+.bottom-nav button{
+border:none;
+background:none;
+font-size:14px;
+color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Welcome -->
+
+<div id="welcome" class="screen">
+
+<div class="hero">
+
 <h1>Our-space</h1>
-<p>A small place made just for you.</p>
-<button onclick="showPassword()">Enter</button>
-</div>
-</div><div id="passwordPage">
-<div class="card">
-<h2>Private Space</h2>
-<p>Enter Password</p><input type="password" id="pass"><button onclick="checkPassword()">Unlock</button>
 
-<p id="error" style="color:red;margin-top:10px;"></p>
-</div>
-</div><div id="mainSite"><div class="header">
-<h1>Welcome To Our-space</h1>
-<p>Your personal study & memory corner</p>
-</div><div class="section">
-<h2>Study Corner</h2>
-<p>Add study materials here later.</p>
-</div><div class="section">
-<h2>Notes</h2>
-<p>Your notes section.</p>
-</div><div class="section">
-<h2>PDF Library</h2>
-<p>Upload PDFs later.</p>
-</div><div class="section">
-<h2>Playlist</h2><div class="music-player">
-<p>No songs added yet.</p>
-<p>You can upload your songs later.</p>
-</div></div><div class="section">
-<h2>About</h2>
 <p>
-This space was created with care and will continue growing over time.
+A small place made just for you, Shibani.
 </p>
-</div><footer>
-Our-space © 2026
-</footer></div><script>
 
-function showPassword(){
-document.getElementById("welcome").style.display="none";
-document.getElementById("passwordPage").style.display="flex";
+<button class="btn" onclick="openPassword()">
+Enter
+</button>
+
+</div>
+
+</div>
+
+<!-- Password -->
+
+<div id="password" class="screen hidden">
+
+<div class="hero">
+
+<h2>Private Space</h2>
+
+<p>Enter Password</p>
+
+<input
+type="password"
+id="pass"
+placeholder="Password">
+
+<button class="btn"
+onclick="checkPassword()">
+Unlock
+</button>
+
+<p id="error"
+style="color:red;margin-top:10px;"></p>
+
+</div>
+
+</div>
+
+<!-- Main Site -->
+
+<div id="site" class="hidden">
+
+<div class="main">
+
+<div class="profile">
+
+<img src="shibani.png">
+
+<h2>Welcome, Shibani</h2>
+
+<p class="quote">
+"Some places are not made of walls,
+but of memories, dreams and us."
+</p>
+
+</div>
+
+<div class="card">
+<h3>📚 Study Corner</h3>
+<p>Add study materials here.</p>
+</div>
+
+<div class="card">
+<h3>📝 Notes</h3>
+<p>Your personal notes section.</p>
+</div>
+
+<div class="card">
+<h3>📄 PDF Library</h3>
+<p>Upload PDFs later.</p>
+</div>
+
+<div class="card">
+<h3>🎵 Playlist</h3>
+<p>Your songs will appear here.</p>
+</div>
+
+<div class="card">
+<h3>❤️ About</h3>
+<p>
+This space was created specially for you.
+</p>
+</div>
+
+</div>
+
+<div class="bottom-nav">
+<button>Home</button>
+<button>Study</button>
+<button>PDFs</button>
+<button>Music</button>
+<button>About</button>
+</div>
+
+</div>
+
+<script>
+
+function openPassword(){
+document.getElementById("welcome").classList.add("hidden");
+document.getElementById("password").classList.remove("hidden");
 }
 
 function checkPassword(){
 
-let password =
+let p =
 document.getElementById("pass").value;
 
-if(password==="Amul@23"){
+if(p==="Amul@23"){
 
-document.getElementById("passwordPage").style.display="none";
+document.getElementById("password").classList.add("hidden");
 
-document.getElementById("mainSite").style.display="block";
+document.getElementById("site").classList.remove("hidden");
 
 }else{
 
-document.getElementById("error").innerText=
+document.getElementById("error").innerText =
 "Wrong Password";
 
 }
 
 }
 
-</script></body>
+</script>
+
+</body>
 </html>
