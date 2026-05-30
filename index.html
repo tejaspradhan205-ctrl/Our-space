@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Our-space</title>
 
 <style>
@@ -43,27 +44,26 @@ padding:30px;
 
 .hero-content{
 color:white;
-animation:fadeIn 1s ease;
 }
 
 .hero h1{
-font-size:48px;
+font-size:58px;
 margin-bottom:15px;
 }
 
 .hero p{
-font-size:18px;
+font-size:20px;
 line-height:1.6;
 }
 
 .btn{
 margin-top:25px;
-padding:14px 30px;
+padding:15px 34px;
 border:none;
 border-radius:30px;
 background:#d9a5a5;
 color:white;
-font-size:16px;
+font-size:18px;
 cursor:pointer;
 }
 
@@ -90,13 +90,16 @@ text-align:center;
 width:100%;
 padding:14px;
 margin-top:15px;
+margin-bottom:15px;
 border-radius:12px;
 border:1px solid #ddd;
 }
 
 .main{
 padding:20px;
-padding-bottom:100px;
+padding-bottom:90px;
+max-width:650px;
+margin:auto;
 }
 
 .profile{
@@ -108,8 +111,8 @@ box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .profile img{
-width:120px;
-height:120px;
+width:130px;
+height:130px;
 border-radius:50%;
 object-fit:cover;
 border:4px solid #eadbc8;
@@ -124,7 +127,7 @@ box-shadow:0 6px 15px rgba(0,0,0,.06);
 }
 
 .card h3{
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
 .bottom-nav{
@@ -145,20 +148,10 @@ background:none;
 font-size:14px;
 }
 
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:translateY(30px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
 </style>
 </head>
-<body><!-- HERO SCREEN -->
+<body>
+<!-- HERO -->
 
 <div id="welcomeScreen" class="hero">
 
@@ -167,39 +160,33 @@ transform:translateY(0);
 <h1>Our-space</h1>
 
 <p>
-A small place made just for you, Shibani.
+A small place made just for you,<br>
+Shibani.
 </p>
 
-<button class="btn"
-onclick="showPassword()">
+<button class="btn" onclick="showPassword()">
 Enter
 </button>
 
 </div>
-
 </div>
 
-<!-- PASSWORD SCREEN -->
+<!-- PASSWORD -->
 
-<div id="passwordScreen"
-class="password-screen hidden">
+<div id="passwordScreen" class="password-screen hidden">
 
 <div class="password-card">
 
 <h2>Private Space</h2>
 
-<p>
-Only for Shibani
-</p>
+<p>Only for Shibani</p>
 
 <input
 type="password"
 id="passwordInput"
 placeholder="Enter Password">
 
-<button
-class="btn"
-onclick="checkPassword()">
+<button class="btn" onclick="checkPassword()">
 Unlock
 </button>
 
@@ -209,29 +196,23 @@ style="color:red;margin-top:10px;">
 </p>
 
 </div>
-
 </div>
 
 <!-- MAIN WEBSITE -->
 
-<div
-id="mainWebsite"
-class="hidden">
+<div id="mainWebsite" class="hidden">
 
 <div class="main">
-
-<!-- PROFILE -->
 
 <div class="profile">
 
 <img src="shibani.png">
 
-<h2>
+<h2 style="margin-top:15px;">
 Welcome, Shibani
 </h2>
 
-<p
-style="
+<p style="
 margin-top:10px;
 color:#666;
 font-style:italic;
@@ -245,13 +226,9 @@ dreams and us.
 
 </div>
 
-<!-- STUDY -->
-
 <div class="card">
 
-<h3>
-📚 Study Corner
-</h3>
+<h3>📚 Study Corner</h3>
 
 <p>
 All your study materials
@@ -260,13 +237,9 @@ will live here.
 
 </div>
 
-<!-- NOTES -->
-
 <div class="card">
 
-<h3>
-📝 Notes
-</h3>
+<h3>📝 Notes</h3>
 
 <p>
 Personal notes,
@@ -275,13 +248,9 @@ reminders and ideas.
 
 </div>
 
-<!-- PDF -->
-
 <div class="card">
 
-<h3>
-📄 PDF Library
-</h3>
+<h3>📄 PDF Library</h3>
 
 <p>
 Future PDFs will appear here.
@@ -289,13 +258,9 @@ Future PDFs will appear here.
 
 </div>
 
-<!-- MUSIC -->
-
 <div class="card">
 
-<h3>
-🎵 Playlist
-</h3>
+<h3>🎵 Playlist</h3>
 
 <p>
 Your songs will be available here.
@@ -303,13 +268,9 @@ Your songs will be available here.
 
 </div>
 
-<!-- MEMORIES -->
-
 <div class="card">
 
-<h3>
-📷 Memories
-</h3>
+<h3>📸 Memories</h3>
 
 <p>
 Photos and memories
@@ -318,81 +279,51 @@ will be stored here.
 
 </div>
 
-<!-- ABOUT -->
-
 <div class="card">
 
-<h3>
-❤️ About
-</h3>
+<h3>❤️ About</h3>
 
 <p>
-
 This place was created
 with care and love.
-
 </p>
 
 </div>
 
 </div>
 
-<!-- BOTTOM NAV -->
-
 <div class="bottom-nav">
 
-<button>
-🏠 Home
-</button>
+<button>🏠 Home</button>
 
-<button>
-📚 Study
-</button>
+<button>📚 Study</button>
 
-<button>
-📄 PDFs
-</button>
+<button>📄 PDFs</button>
 
-<button>
-🎵 Music
-</button>
+<button>🎵 Music</button>
 
-<button>
-❤️ About
-</button>
+<button>❤️ About</button>
 
 </div>
 
-</div><script>
+</div>
+<script>
 
-function showPassword(){
-
-document
-.getElementById("welcomeScreen")
-.classList.add("hidden");
-
-document
-.getElementById("passwordScreen")
-.classList.remove("hidden");
-
+function showPassword() {
+document.getElementById("welcomeScreen").style.display = "none";
+document.getElementById("passwordScreen").style.display = "flex";
 }
 
-function checkPassword(){
+function checkPassword() {
 
 let password =
-document
-.getElementById("passwordInput")
-.value;
+document.getElementById("passwordInput").value;
 
-if(password==="Amul@23"){
+if(password === "Amul@23") {
 
-document
-.getElementById("passwordScreen")
-.classList.add("hidden");
+document.getElementById("passwordScreen").style.display = "none";
 
-document
-.getElementById("mainWebsite")
-.classList.remove("hidden");
+document.getElementById("mainWebsite").style.display = "block";
 
 window.scrollTo({
 top:0,
@@ -402,41 +333,12 @@ behavior:"smooth"
 }
 else{
 
-document
-.getElementById("errorText")
-.innerText="Wrong Password";
+document.getElementById("errorText").innerText =
+"Wrong Password";
 
 }
 
 }
-
-/* Fade Animation For Cards */
-
-window.addEventListener("load",()=>{
-
-const cards =
-document.querySelectorAll(".card");
-
-cards.forEach((card,index)=>{
-
-card.style.opacity="0";
-card.style.transform="translateY(20px)";
-
-setTimeout(()=>{
-
-card.style.transition=
-"all .6s ease";
-
-card.style.opacity="1";
-
-card.style.transform=
-"translateY(0)";
-
-},index*120);
-
-});
-
-});
 
 </script>
 
