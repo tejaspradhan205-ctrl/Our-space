@@ -1,10 +1,170 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html lang="en">
 <head>
-<title>Our Space</title>
-</head>
-<body>
-<h1>Hello ❤️</h1>
-<p>This website is under construction.</p>
-</body>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our-space</title><style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#f8f5f1;
+color:#333;
+}
+
+#welcome,
+#passwordPage,
+#mainSite{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:20px;
+text-align:center;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+width:100%;
+max-width:400px;
+}
+
+h1{
+margin-bottom:15px;
+}
+
+p{
+line-height:1.6;
+}
+
+button{
+margin-top:15px;
+padding:12px 24px;
+border:none;
+border-radius:12px;
+background:#d8c7b6;
+color:#222;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:16px;
+}
+
+#passwordPage,
+#mainSite{
+display:none;
+}
+
+.header{
+padding:30px 20px;
+text-align:center;
+}
+
+.section{
+background:white;
+margin:15px;
+padding:20px;
+border-radius:18px;
+box-shadow:0 6px 15px rgba(0,0,0,0.05);
+}
+
+.section h2{
+margin-bottom:10px;
+}
+
+.music-player{
+margin-top:15px;
+padding:15px;
+background:#faf7f3;
+border-radius:15px;
+}
+
+footer{
+text-align:center;
+padding:30px;
+font-size:14px;
+color:#777;
+}
+</style></head><body><div id="welcome">
+<div class="card">
+<h1>Our-space</h1>
+<p>A small place made just for you.</p>
+<button onclick="showPassword()">Enter</button>
+</div>
+</div><div id="passwordPage">
+<div class="card">
+<h2>Private Space</h2>
+<p>Enter Password</p><input type="password" id="pass"><button onclick="checkPassword()">Unlock</button>
+
+<p id="error" style="color:red;margin-top:10px;"></p>
+</div>
+</div><div id="mainSite"><div class="header">
+<h1>Welcome To Our-space</h1>
+<p>Your personal study & memory corner</p>
+</div><div class="section">
+<h2>Study Corner</h2>
+<p>Add study materials here later.</p>
+</div><div class="section">
+<h2>Notes</h2>
+<p>Your notes section.</p>
+</div><div class="section">
+<h2>PDF Library</h2>
+<p>Upload PDFs later.</p>
+</div><div class="section">
+<h2>Playlist</h2><div class="music-player">
+<p>No songs added yet.</p>
+<p>You can upload your songs later.</p>
+</div></div><div class="section">
+<h2>About</h2>
+<p>
+This space was created with care and will continue growing over time.
+</p>
+</div><footer>
+Our-space © 2026
+</footer></div><script>
+
+function showPassword(){
+document.getElementById("welcome").style.display="none";
+document.getElementById("passwordPage").style.display="flex";
+}
+
+function checkPassword(){
+
+let password =
+document.getElementById("pass").value;
+
+if(password==="Amul@23"){
+
+document.getElementById("passwordPage").style.display="none";
+
+document.getElementById("mainSite").style.display="block";
+
+}else{
+
+document.getElementById("error").innerText=
+"Wrong Password";
+
+}
+
+}
+
+</script></body>
 </html>
