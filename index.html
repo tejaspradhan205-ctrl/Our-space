@@ -1,916 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
-:root{
-    --bg:#060606;
-    --bg2:#0d0d0d;
-    --card:rgba(255,255,255,.06);
-    --border:rgba(255,215,120,.18);
-    --gold:#d4af37;
-    --gold2:#f3d27a;
-    --text:#ffffff;
-    --muted:#b7b7b7;
-    --shadow:0 20px 60px rgba(0,0,0,.45);
-    --radius:24px;
-    --blur:18px;
-    --transition:.35s ease;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    background:
-    radial-gradient(circle at top left,rgba(212,175,55,.08),transparent 35%),
-    radial-gradient(circle at top right,rgba(212,175,55,.06),transparent 35%),
-    var(--bg);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    min-height:100vh;
-    overflow-x:hidden;
-}
-
-body.loading{
-    overflow:hidden;
-}
-
-img{
-    max-width:100%;
-    display:block;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-button{
-    border:none;
-    outline:none;
-    cursor:pointer;
-    font-family:inherit;
-}
-
-input{
-    outline:none;
-    font-family:inherit;
-}
-
-.page{
-    padding:18px 18px 120px;
-    width:100%;
-    max-width:900px;
-    margin:auto;
-}
-
-.section{
-    margin-top:28px;
-}
-
-.section-title{
-    font-family:'Cormorant Garamond',serif;
-    font-size:2rem;
-    margin-bottom:16px;
-    color:var(--gold2);
-}
-
-.glass{
-    background:var(--card);
-    backdrop-filter:blur(var(--blur));
-    -webkit-backdrop-filter:blur(var(--blur));
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-}
-
-.loader{
-    position:fixed;
-    inset:0;
-    background:#000;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
-}
-
-.loader.hidden{
-    opacity:0;
-    pointer-events:none;
-    transition:.7s ease;
-}
-
-.loader-logo{
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    border:3px solid rgba(255,255,255,.1);
-    border-top:3px solid var(--gold);
-    animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-.particles{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    z-index:-1;
-}
-
-.particle{
-    position:absolute;
-    border-radius:50%;
-    background:rgba(212,175,55,.15);
-    animation:float 15s linear infinite;
-}
-
-@keyframes float{
-    from{
-        transform:translateY(110vh);
-    }
-    to{
-        transform:translateY(-120px);
-    }
-}
-
-.hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:22px;
-    position:relative;
-}
-
-.hero-image{
-    width:100%;
-    height:420px;
-    object-fit:cover;
-    border-radius:32px;
-    border:1px solid var(--border);
-    box-shadow:var(--shadow);
-}
-
-.hero-card{
-    padding:26px;
-}
-
-.hero-title{
-    font-family:'Cormorant Garamond',serif;
-    font-size:3.3rem;
-    line-height:1;
-    color:var(--gold2);
-}
-
-.hero-subtitle{
-    color:var(--muted);
-    margin-top:12px;
-    line-height:1.7;
-}
-
-.luxury-btn{
-    margin-top:18px;
-    background:linear-gradient(135deg,var(--gold),var(--gold2));
-    color:#000;
-    font-weight:700;
-    padding:14px 20px;
-    border-radius:18px;
-}
-
-.password-box{
-    padding:20px;
-    margin-top:18px;
-}
-
-.password-input{
-    width:100%;
-    background:rgba(255,255,255,.06);
-    color:white;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:16px;
-    padding:14px;
-}
-
-.grid-cards{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:14px;
-    margin-top:20px;
-}
-
-.quick-card{
-    padding:18px;
-    min-height:130px;
-    transition:var(--transition);
-}
-
-.quick-card:hover{
-    transform:translateY(-5px);
-}
-
-.quick-card h3{
-    color:var(--gold2);
-    margin-bottom:10px;
-}
-
-.quick-card p{
-    color:var(--muted);
-    font-size:.9rem;
-}
-
-.topbar{
-    position:sticky;
-    top:0;
-    z-index:50;
-    padding:10px 0 16px;
-    backdrop-filter:blur(15px);
-}
-
-.topbar-inner{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 18px;
-}
-
-.brand{
-    font-family:'Cormorant Garamond',serif;
-    color:var(--gold2);
-    font-size:1.8rem;
-}
-
-.gallery-grid{
-    column-count:2;
-    column-gap:14px;
-}
-
-.gallery-item{
-    break-inside:avoid;
-    margin-bottom:14px;
-    overflow:hidden;
-    border-radius:24px;
-    cursor:pointer;
-}
-
-.gallery-item img{
-    width:100%;
-    transition:.5s;
-}
-
-.gallery-item:hover img{
-    transform:scale(1.05);
-}
-
-.music-list{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-}
-
-.song-card{
-    padding:16px;
-}
-
-.song-top{
-    display:flex;
-    gap:14px;
-    align-items:center;
-}
-
-.song-art{
-    width:70px;
-    height:70px;
-    border-radius:18px;
-    object-fit:cover;
-}
-
-.song-title{
-    color:var(--gold2);
-    font-weight:600;
-}
-
-.audio-player{
-    width:100%;
-    margin-top:14px;
-}
-
-.pdf-search{
-    width:100%;
-    padding:14px;
-    border-radius:18px;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(255,255,255,.06);
-    color:white;
-    margin-bottom:18px;
-}
-
-.pdf-grid{
-    display:grid;
-    gap:14px;
-}
-
-.pdf-card{
-    padding:18px;
-}
-
-.pdf-card h3{
-    color:var(--gold2);
-    margin-bottom:8px;
-}
-
-.pdf-card a{
-    display:inline-block;
-    margin-top:10px;
-    color:var(--gold2);
-}
-
-.timeline{
-    position:relative;
-    padding-left:22px;
-}
-
-.timeline::before{
-    content:'';
-    position:absolute;
-    left:7px;
-    top:0;
-    width:2px;
-    height:100%;
-    background:rgba(212,175,55,.3);
-}
-
-.timeline-item{
-    position:relative;
-    margin-bottom:22px;
-    padding:18px;
-}
-
-.timeline-item::before{
-    content:'';
-    width:14px;
-    height:14px;
-    border-radius:50%;
-    background:var(--gold);
-    position:absolute;
-    left:-23px;
-    top:25px;
-}
-
-.profile-card{
-    text-align:center;
-    padding:24px;
-}
-
-.profile-image{
-    width:140px;
-    height:140px;
-    object-fit:cover;
-    border-radius:50%;
-    margin:auto;
-    border:3px solid var(--gold);
-}
-
-.profile-card h2{
-    margin-top:16px;
-    color:var(--gold2);
-}
-
-.info-grid{
-    display:grid;
-    gap:14px;
-    margin-top:18px;
-}
-
-.info-card{
-    padding:18px;
-}
-
-.message-wall{
-    margin-top:20px;
-    padding:18px;
-}
-
-.message-wall p{
-    color:var(--muted);
-    line-height:1.8;
-}
-
-.bottom-nav{
-    position:fixed;
-    bottom:14px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 24px);
-    max-width:850px;
-    padding:10px;
-    z-index:999;
-}
-
-.bottom-nav-inner{
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    padding:10px;
-}
-
-.nav-item{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:6px;
-    color:#a4a4a4;
-    font-size:.75rem;
-    transition:.3s;
-}
-
-.nav-item.active,
-.nav-item:hover{
-    color:var(--gold2);
-}
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.92);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-}
-
-.modal.active{
-    opacity:1;
-    pointer-events:auto;
-}
-
-.modal img{
-    max-width:95%;
-    max-height:90%;
-    border-radius:24px;
-}
-
-.fade-up{
-    opacity:0;
-    transform:translateY(30px);
-    transition:.7s ease;
-}
-
-.fade-up.show{
-    opacity:1;
-    transform:none;
-}
-
-@media(min-width:768px){
-
-    .hero{
-        min-height:80vh;
-    }
-
-    .gallery-grid{
-        column-count:3;
-    }
-
-    .grid-cards{
-        grid-template-columns:repeat(4,1fr);
-    }
-
-}
-document.addEventListener("DOMContentLoaded", () => {
-
-    initLoader();
-    createParticles();
-    initScrollAnimations();
-    initPasswordSystem();
-    loadGallery();
-    loadMusic();
-    loadPDFs();
-    initPDFSearch();
-    initImageModal();
-    setActiveNav();
-
-});
-
-function initLoader() {
-
-    const loader = document.querySelector(".loader");
-
-    if (!loader) return;
-
-    window.addEventListener("load", () => {
-
-        setTimeout(() => {
-
-            loader.classList.add("hidden");
-
-        }, 800);
-
-    });
-
-}
-
-function createParticles() {
-
-    const container = document.querySelector(".particles");
-
-    if (!container) return;
-
-    for (let i = 0; i < 30; i++) {
-
-        const particle = document.createElement("div");
-
-        particle.className = "particle";
-
-        const size = Math.random() * 5 + 2;
-
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-
-        particle.style.left = `${Math.random() * 100}%`;
-
-        particle.style.animationDuration =
-            `${Math.random() * 15 + 10}s`;
-
-        particle.style.animationDelay =
-            `${Math.random() * 8}s`;
-
-        container.appendChild(particle);
-
-    }
-
-}
-
-function initScrollAnimations() {
-
-    const elements = document.querySelectorAll(".fade-up");
-
-    if (!elements.length) return;
-
-    const observer = new IntersectionObserver(entries => {
-
-        entries.forEach(entry => {
-
-            if (entry.isIntersecting) {
-
-                entry.target.classList.add("show");
-
-            }
-
-        });
-
-    }, {
-        threshold: 0.15
-    });
-
-    elements.forEach(el => observer.observe(el));
-
-}
-
-function initPasswordSystem() {
-
-    const unlockBtn = document.getElementById("unlockBtn");
-    const passwordInput = document.getElementById("passwordInput");
-    const protectedArea = document.getElementById("protectedArea");
-
-    if (!unlockBtn || !passwordInput || !protectedArea) return;
-
-    const saved = localStorage.getItem("ourspace_access");
-
-    if (saved === "granted") {
-
-        protectedArea.style.display = "block";
-
-        const lockCard = document.getElementById("lockCard");
-
-        if (lockCard) {
-            lockCard.style.display = "none";
-        }
-
-    }
-
-    unlockBtn.addEventListener("click", () => {
-
-        const value = passwordInput.value.trim();
-
-        if (value === "ourspace") {
-
-            localStorage.setItem(
-                "ourspace_access",
-                "granted"
-            );
-
-            protectedArea.style.display = "block";
-
-            const lockCard =
-                document.getElementById("lockCard");
-
-            if (lockCard) {
-                lockCard.style.display = "none";
-            }
-
-        } else {
-
-            passwordInput.value = "";
-
-            passwordInput.placeholder =
-                "Incorrect Password";
-
-        }
-
-    });
-
-}
-
-async function loadGallery() {
-
-    const container =
-        document.getElementById("galleryContainer");
-
-    if (!container) return;
-
-    try {
-
-        const response =
-            await fetch("gallery.json");
-
-        const data =
-            await response.json();
-
-        container.innerHTML = "";
-
-        data.images.forEach(image => {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "gallery-item glass fade-up";
-
-            card.innerHTML = `
-                <img
-                src="${image}"
-                loading="lazy"
-                alt="gallery image">
-            `;
-
-            card.addEventListener("click", () => {
-
-                openImageModal(image);
-
-            });
-
-            container.appendChild(card);
-
-        });
-
-        initScrollAnimations();
-
-    } catch (error) {
-
-        container.innerHTML = `
-        <div class="glass"
-        style="padding:20px">
-        No images found
-        </div>`;
-
-    }
-
-}
-
-async function loadMusic() {
-
-    const container =
-        document.getElementById("musicContainer");
-
-    if (!container) return;
-
-    try {
-
-        const response =
-            await fetch("music.json");
-
-        const data =
-            await response.json();
-
-        container.innerHTML = "";
-
-        data.songs.forEach(song => {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "song-card glass fade-up";
-
-            const artwork =
-                song.artwork || "shibani.png";
-
-            card.innerHTML = `
-            <div class="song-top">
-
-                <img
-                class="song-art"
-                src="${artwork}"
-                alt="art">
-
-                <div>
-
-                    <div class="song-title">
-                    ${song.title}
-                    </div>
-
-                </div>
-
-            </div>
-
-            <audio
-            class="audio-player"
-            controls>
-
-            <source
-            src="${song.file}"
-            type="audio/mpeg">
-
-            </audio>
-            `;
-
-            container.appendChild(card);
-
-        });
-
-        initScrollAnimations();
-
-    } catch (error) {
-
-        container.innerHTML = `
-        <div class="glass"
-        style="padding:20px">
-        No music available
-        </div>`;
-
-    }
-
-}
-
-async function loadPDFs() {
-
-    const container =
-        document.getElementById("pdfContainer");
-
-    if (!container) return;
-
-    try {
-
-        const response =
-            await fetch("pdfs.json");
-
-        const data =
-            await response.json();
-
-        container.innerHTML = "";
-
-        data.pdfs.forEach(pdf => {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "pdf-card glass fade-up";
-
-            card.dataset.title =
-                pdf.title.toLowerCase();
-
-            card.innerHTML = `
-            <h3>${pdf.title}</h3>
-
-            <a
-            href="${pdf.file}"
-            target="_blank">
-
-            Open PDF
-
-            </a>
-            `;
-
-            container.appendChild(card);
-
-        });
-
-        initScrollAnimations();
-
-    } catch (error) {
-
-        container.innerHTML = `
-        <div class="glass"
-        style="padding:20px">
-        No PDF files available
-        </div>`;
-
-    }
-
-}
-
-function initPDFSearch() {
-
-    const input =
-        document.getElementById("pdfSearch");
-
-    if (!input) return;
-
-    input.addEventListener("input", () => {
-
-        const value =
-            input.value.toLowerCase();
-
-        const cards =
-            document.querySelectorAll(".pdf-card");
-
-        cards.forEach(card => {
-
-            const title =
-                card.dataset.title;
-
-            card.style.display =
-                title.includes(value)
-                    ? "block"
-                    : "none";
-
-        });
-
-    });
-
-}
-
-function initImageModal() {
-
-    const modal =
-        document.getElementById("imageModal");
-
-    if (!modal) return;
-
-    modal.addEventListener("click", () => {
-
-        modal.classList.remove("active");
-
-    });
-
-}
-
-function openImageModal(src) {
-
-    const modal =
-        document.getElementById("imageModal");
-
-    const image =
-        document.getElementById("modalImage");
-
-    if (!modal || !image) return;
-
-    image.src = src;
-
-    modal.classList.add("active");
-
-}
-
-function setActiveNav() {
-
-    const page =
-        location.pathname.split("/")
-        .pop();
-
-    const navLinks =
-        document.querySelectorAll(".nav-item");
-
-    navLinks.forEach(link => {
-
-        const href =
-            link.getAttribute("href");
-
-        if (
-            href === page ||
-            (page === "" &&
-            href === "index.html")
-        ) {
-
-            link.classList.add("active");
-
-        }
-
-    });
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -920,879 +8,1050 @@ function setActiveNav() {
 
 <title>Our Space Signature Edition</title>
 
-<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#050505">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--bg:#050505;
+--bg2:#0b0b0b;
+--glass:rgba(255,255,255,.05);
+--glass2:rgba(255,255,255,.08);
+--gold:#c9a24a;
+--gold2:#f2da90;
+--text:#ffffff;
+--muted:#b7b7b7;
+--shadow:0 25px 80px rgba(0,0,0,.55);
+--radius:32px;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:
+radial-gradient(circle at top left,rgba(201,162,74,.10),transparent 35%),
+radial-gradient(circle at top right,rgba(201,162,74,.05),transparent 35%),
+#050505;
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+img{
+display:block;
+max-width:100%;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+button{
+border:none;
+outline:none;
+font-family:inherit;
+cursor:pointer;
+}
+
+input{
+outline:none;
+border:none;
+font-family:inherit;
+}
+
+.loader{
+position:fixed;
+inset:0;
+background:black;
+z-index:999999;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.loader-ring{
+width:95px;
+height:95px;
+border-radius:50%;
+border:3px solid rgba(255,255,255,.08);
+border-top:3px solid var(--gold2);
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+to{
+transform:rotate(360deg);
+}
+}
+
+.particles{
+position:fixed;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+z-index:-1;
+}
+
+.particle{
+position:absolute;
+border-radius:50%;
+background:rgba(242,218,144,.15);
+animation:float linear infinite;
+}
+
+@keyframes float{
+from{
+transform:translateY(110vh);
+}
+to{
+transform:translateY(-120px);
+}
+}
+
+.app{
+width:100%;
+max-width:1200px;
+margin:auto;
+padding:18px 18px 140px;
+}
+
+.glass{
+background:var(--glass);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:var(--shadow);
+}
+
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:22px;
+}
+
+.hero-image{
+width:100%;
+height:520px;
+object-fit:cover;
+border-radius:38px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:var(--shadow);
+}
+
+.hero-card{
+padding:32px;
+border-radius:var(--radius);
+position:relative;
+overflow:hidden;
+}
+
+.hero-card::before{
+content:'';
+position:absolute;
+inset:-150%;
+background:
+linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,.05),
+transparent
+);
+animation:shine 8s linear infinite;
+}
+
+@keyframes shine{
+100%{
+transform:translateX(220%);
+}
+}
+
+.hero-title{
+font-family:'Cormorant Garamond',serif;
+font-size:4.5rem;
+line-height:1;
+color:var(--gold2);
+}
+
+.hero-subtitle{
+margin-top:14px;
+line-height:1.9;
+color:var(--muted);
+}
+
+.password-box{
+padding:22px;
+border-radius:var(--radius);
+}
+
+.password-input{
+width:100%;
+padding:18px;
+border-radius:18px;
+background:rgba(255,255,255,.05);
+color:white;
+}
+
+.enter-btn{
+width:100%;
+padding:18px;
+margin-top:14px;
+border-radius:18px;
+background:
+linear-gradient(
+135deg,
+var(--gold),
+var(--gold2)
+);
+font-weight:700;
+color:black;
+}
+
+.hidden{
+display:none;
+}
+
+.section{
+margin-top:28px;
+}
+
+.section-title{
+font-family:'Cormorant Garamond',serif;
+font-size:2.6rem;
+margin-bottom:18px;
+color:var(--gold2);
+}
+
+.quick-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+}
+
+.quick-card{
+padding:22px;
+border-radius:26px;
+}
+
+.quick-card h3{
+color:var(--gold2);
+margin-bottom:10px;
+}
+
+.quick-card p{
+color:var(--muted);
+line-height:1.7;
+}
+
+.fade{
+opacity:0;
+transform:translateY(30px);
+transition:.8s;
+}
+
+.fade.show{
+opacity:1;
+transform:none;
+}
+
+@media(min-width:768px){
+
+.quick-grid{
+grid-template-columns:repeat(4,1fr);
+}
+
+.hero{
+min-height:85vh;
+}
+
+}
+
+</style>
 
 </head>
 
-<body class="loading">
+<body>
 
-<div class="loader">
-    <div class="loader-logo"></div>
+<div class="loader" id="loader">
+<div class="loader-ring"></div>
 </div>
 
-<div class="particles"></div>
+<div class="particles" id="particles"></div>
 
-<div class="page">
+<div class="app">
 
-    <section class="hero">
+<section class="hero">
 
-        <img
-        src="shibani.png"
-        alt="Hero"
-        class="hero-image fade-up">
+<img
+src="shibani.png"
+class="hero-image fade"
+alt="cover">
 
-        <div class="hero-card glass fade-up">
+<div class="hero-card glass fade">
 
-            <h1 class="hero-title">
-                Our Space
-            </h1>
+<h1 class="hero-title">
+Our Space
+</h1>
 
-            <p class="hero-subtitle">
-                A private luxury digital space designed to preserve memories,
-                music, moments and meaningful experiences.
-            </p>
-
-        </div>
-
-        <div
-        id="lockCard"
-        class="password-box glass fade-up">
-
-            <input
-            type="password"
-            id="passwordInput"
-            class="password-input"
-            placeholder="Enter Password">
-
-            <button
-            id="unlockBtn"
-            class="luxury-btn">
-                Enter Space
-            </button>
-
-        </div>
-
-        <div
-        id="protectedArea"
-        style="display:none;">
-
-            <div class="grid-cards">
-
-                <a
-                href="gallery.html"
-                class="quick-card glass fade-up">
-
-                    <h3>Gallery</h3>
-
-                    <p>
-                        Luxury photo collection
-                    </p>
-
-                </a>
-
-                <a
-                href="music.html"
-                class="quick-card glass fade-up">
-
-                    <h3>Music</h3>
-
-                    <p>
-                        Personal soundtrack
-                    </p>
-
-                </a>
-
-                <a
-                href="pdf.html"
-                class="quick-card glass fade-up">
-
-                    <h3>Library</h3>
-
-                    <p>
-                        Digital documents
-                    </p>
-
-                </a>
-
-                <a
-                href="memories.html"
-                class="quick-card glass fade-up">
-
-                    <h3>Memories</h3>
-
-                    <p>
-                        Timelines & moments
-                    </p>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
+<p class="hero-subtitle">
+A luxury private digital universe crafted for memories,
+music, emotions, stories and timeless moments.
+</p>
 
 </div>
 
-<nav class="bottom-nav glass">
+<div
+class="password-box glass fade"
+id="lockBox">
 
-    <div class="bottom-nav-inner">
+<input
+type="password"
+id="passwordInput"
+class="password-input"
+placeholder="Enter Password">
 
-        <a
-        href="index.html"
-        class="nav-item">
+<button
+id="unlockBtn"
+class="enter-btn">
+Enter Space
+</button>
 
-            <span>Home</span>
-
-        </a>
-
-        <a
-        href="gallery.html"
-        class="nav-item">
-
-            <span>Gallery</span>
-
-        </a>
-
-        <a
-        href="music.html"
-        class="nav-item">
-
-            <span>Music</span>
-
-        </a>
-
-        <a
-        href="about.html"
-        class="nav-item">
-
-            <span>About</span>
-
-        </a>
-
-    </div>
-
-</nav>
-
-<script src="script.js"></script>
-
-</body>
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Gallery | Our Space Signature Edition</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
-
-<body class="loading">
-
-<div class="loader">
-    <div class="loader-logo"></div>
 </div>
 
-<div class="particles"></div>
+<div
+id="mainContent"
+class="hidden">
 
-<header class="topbar">
+<div class="quick-grid">
 
-    <div class="topbar-inner glass">
+<div class="quick-card glass fade">
+<h3>Gallery</h3>
+<p>Luxury image collection</p>
+</div>
 
-        <div class="brand">
-            Gallery
-        </div>
+<div class="quick-card glass fade">
+<h3>Music</h3>
+<p>Premium soundtrack library</p>
+</div>
 
-    </div>
+<div class="quick-card glass fade">
+<h3>Memories</h3>
+<p>Special moments timeline</p>
+</div>
 
-</header>
+<div class="quick-card glass fade">
+<h3>Library</h3>
+<p>PDF archive collection</p>
+</div>
 
-<div class="page">
-
+</div>
     <section class="section">
 
-        <h2 class="section-title fade-up">
-            Photo Collection
-        </h2>
+<h2 class="section-title fade">
+Featured Memory
+</h2>
 
-        <div
-        id="galleryContainer"
-        class="gallery-grid">
+<div class="hero-card glass fade">
 
-        </div>
+<p class="hero-subtitle">
 
-    </section>
+Every memory deserves a beautiful place.
+Every photograph deserves a timeless frame.
+Every moment deserves a story that lives forever.
+
+</p>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 class="section-title fade">
+Luxury Gallery
+</h2>
+
+<div
+id="galleryGrid"
+style="
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+">
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 class="section-title fade">
+Music Collection
+</h2>
+
+<div
+id="musicContainer">
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 class="section-title fade">
+PDF Library
+</h2>
+
+<div
+id="pdfContainer">
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 class="section-title fade">
+Memories Timeline
+</h2>
+
+<div
+id="timelineContainer">
+
+<div class="hero-card glass fade">
+
+<h3
+style="
+color:var(--gold2);
+margin-bottom:10px;
+">
+
+Beginning
+
+</h3>
+
+<p class="hero-subtitle">
+
+The story started with a beautiful moment.
+
+</p>
+
+</div>
+
+<br>
+
+<div class="hero-card glass fade">
+
+<h3
+style="
+color:var(--gold2);
+margin-bottom:10px;
+">
+
+Journey
+
+</h3>
+
+<p class="hero-subtitle">
+
+Every memory became part of something special.
+
+</p>
+
+</div>
+
+<br>
+
+<div class="hero-card glass fade">
+
+<h3
+style="
+color:var(--gold2);
+margin-bottom:10px;
+">
+
+Forever
+
+</h3>
+
+<p class="hero-subtitle">
+
+Some moments never leave the heart.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 class="section-title fade">
+About
+</h2>
+
+<div class="hero-card glass fade">
+
+<img
+src="shibani.png"
+style="
+width:140px;
+height:140px;
+border-radius:50%;
+object-fit:cover;
+margin:auto;
+border:3px solid var(--gold2);
+">
+
+<h3
+style="
+text-align:center;
+margin-top:18px;
+color:var(--gold2);
+font-size:2rem;
+font-family:'Cormorant Garamond',serif;
+">
+
+Signature Edition
+
+</h3>
+
+<p
+class="hero-subtitle"
+style="
+text-align:center;
+">
+
+A premium private digital experience
+built to preserve memories,
+music and meaningful moments.
+
+</p>
+
+</div>
+
+</section>
 
 </div>
 
 <div
 id="imageModal"
-class="modal">
+style="
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.95);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999999;
+">
 
-    <img
-    id="modalImage"
-    src=""
-    alt="Preview">
+<img
+id="modalImage"
+style="
+max-width:95%;
+max-height:90%;
+border-radius:28px;
+">
 
 </div>
 
-<nav class="bottom-nav glass">
+<style>
 
-    <div class="bottom-nav-inner">
-
-        <a
-        href="index.html"
-        class="nav-item">
-
-            <span>Home</span>
-
-        </a>
-
-        <a
-        href="gallery.html"
-        class="nav-item">
-
-            <span>Gallery</span>
-
-        </a>
-
-        <a
-        href="music.html"
-        class="nav-item">
-
-            <span>Music</span>
-
-        </a>
-
-        <a
-        href="about.html"
-        class="nav-item">
-
-            <span>About</span>
-
-        </a>
-
-    </div>
-
-</nav>
-
-<script src="script.js"></script>
-
-</body>
-
-</html>
-
+.gallery-card{
+overflow:hidden;
+border-radius:24px;
+cursor:pointer;
 }
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Music | Our Space Signature Edition</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
-
-<body class="loading">
-
-<div class="loader">
-    <div class="loader-logo"></div>
-</div>
-
-<div class="particles"></div>
-
-<header class="topbar">
-
-    <div class="topbar-inner glass">
-
-        <div class="brand">
-            Music
-        </div>
-
-    </div>
-
-</header>
-
-<div class="page">
-
-    <section class="section">
-
-        <h2 class="section-title fade-up">
-            Personal Soundtrack
-        </h2>
-
-        <div
-        id="musicContainer"
-        class="music-list">
-
-        </div>
-
-    </section>
-
-</div>
-
-<nav class="bottom-nav glass">
-
-    <div class="bottom-nav-inner">
-
-        <a
-        href="index.html"
-        class="nav-item">
-
-            <span>Home</span>
-
-        </a>
-
-        <a
-        href="gallery.html"
-        class="nav-item">
-
-            <span>Gallery</span>
-
-        </a>
-
-        <a
-        href="music.html"
-        class="nav-item">
-
-            <span>Music</span>
-
-        </a>
-
-        <a
-        href="about.html"
-        class="nav-item">
-
-            <span>About</span>
-
-        </a>
-
-    </div>
-
-</nav>
-
-<script src="script.js"></script>
-
-</body>
-  <!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Library | Our Space Signature Edition</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
-
-<body class="loading">
-
-<div class="loader">
-    <div class="loader-logo"></div>
-</div>
-
-<div class="particles"></div>
-
-<header class="topbar">
-
-    <div class="topbar-inner glass">
-
-        <div class="brand">
-            Library
-        </div>
-
-    </div>
-
-</header>
-
-<div class="page">
-
-    <section class="section">
-
-        <h2 class="section-title fade-up">
-            PDF Collection
-        </h2>
-
-        <input
-        type="text"
-        id="pdfSearch"
-        class="pdf-search"
-        placeholder="Search PDFs">
-
-        <div
-        id="pdfContainer"
-        class="pdf-grid">
-
-        </div>
-
-    </section>
-
-</div>
-
-<nav class="bottom-nav glass">
-
-    <div class="bottom-nav-inner">
-
-        <a href="index.html" class="nav-item">
-            <span>Home</span>
-        </a>
-
-        <a href="gallery.html" class="nav-item">
-            <span>Gallery</span>
-        </a>
-
-        <a href="music.html" class="nav-item">
-            <span>Music</span>
-        </a>
-
-        <a href="about.html" class="nav-item">
-            <span>About</span>
-        </a>
-
-    </div>
-
-</nav>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Memories | Our Space Signature Edition</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
-
-<body class="loading">
-
-<div class="loader">
-    <div class="loader-logo"></div>
-</div>
-
-<div class="particles"></div>
-
-<header class="topbar">
-
-    <div class="topbar-inner glass">
-
-        <div class="brand">
-            Memories
-        </div>
-
-    </div>
-
-</header>
-
-<div class="page">
-
-    <section class="section">
-
-        <h2 class="section-title fade-up">
-            Special Moments
-        </h2>
-
-        <div class="timeline">
-
-            <div class="timeline-item glass fade-up">
-                <h3>Beginning</h3>
-                <p>A beautiful memory preserved forever.</p>
-            </div>
-
-            <div class="timeline-item glass fade-up">
-                <h3>Journey</h3>
-                <p>Moments that became unforgettable stories.</p>
-            </div>
-
-            <div class="timeline-item glass fade-up">
-                <h3>Today</h3>
-                <p>Still creating new memories every day.</p>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="section">
-
-        <h2 class="section-title fade-up">
-            Quotes
-        </h2>
-
-        <div class="glass message-wall fade-up">
-
-            <p>
-                Some memories become timeless because they
-                continue living inside the heart long after
-                the moment has passed.
-            </p>
-
-        </div>
-
-    </section>
-
-</div>
-
-<nav class="bottom-nav glass">
-
-    <div class="bottom-nav-inner">
-
-        <a href="index.html" class="nav-item">
-            <span>Home</span>
-        </a>
-
-        <a href="gallery.html" class="nav-item">
-            <span>Gallery</span>
-        </a>
-
-        <a href="music.html" class="nav-item">
-            <span>Music</span>
-        </a>
-
-        <a href="about.html" class="nav-item">
-            <span>About</span>
-        </a>
-
-    </div>
-
-</nav>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>About | Our Space Signature Edition</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
-
-<body class="loading">
-
-<div class="loader">
-    <div class="loader-logo"></div>
-</div>
-
-<div class="particles"></div>
-
-<header class="topbar">
-
-    <div class="topbar-inner glass">
-
-        <div class="brand">
-            About
-        </div>
-
-    </div>
-
-</header>
-
-<div class="page">
-
-    <section class="section">
-
-        <div class="profile-card glass fade-up">
-
-            <img
-            src="shibani.png"
-            alt="Profile"
-            class="profile-image">
-
-            <h2>
-                Signature Edition
-            </h2>
-
-            <p class="hero-subtitle">
-                A private premium digital space designed
-                for memories, music, stories and moments.
-            </p>
-
-        </div>
-
-    </section>
-
-    <section class="section">
-
-        <h2 class="section-title fade-up">
-            Information
-        </h2>
-
-        <div class="info-grid">
-
-            <div class="info-card glass fade-up">
-                Personal Archive
-            </div>
-
-            <div class="info-card glass fade-up">
-                Luxury Digital Collection
-            </div>
-
-            <div class="info-card glass fade-up">
-                Memories & Stories
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="section">
-
-        <h2 class="section-title fade-up">
-            Message Wall
-        </h2>
-
-        <div class="message-wall glass fade-up">
-
-            <p>
-                Every photograph captures a moment.
-                Every song captures a feeling.
-                Every memory captures a part of life.
-            </p>
-
-        </div>
-
-    </section>
-
-</div>
-
-<nav class="bottom-nav glass">
-
-    <div class="bottom-nav-inner">
-
-        <a href="index.html" class="nav-item">
-            <span>Home</span>
-        </a>
-
-        <a href="gallery.html" class="nav-item">
-            <span>Gallery</span>
-        </a>
-
-        <a href="music.html" class="nav-item">
-            <span>Music</span>
-        </a>
-
-        <a href="about.html" class="nav-item">
-            <span>About</span>
-        </a>
-
-    </div>
-
-</nav>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+.gallery-card img{
+width:100%;
+height:220px;
+object-fit:cover;
+display:block;
+}
+
+.music-card{
+padding:18px;
+border-radius:24px;
+margin-bottom:14px;
+}
+
+.pdf-card{
+padding:18px;
+border-radius:24px;
+margin-bottom:14px;
+}
+
+.pdf-btn{
+display:inline-block;
+margin-top:12px;
+padding:12px 18px;
+border-radius:14px;
+background:
+linear-gradient(
+135deg,
+var(--gold),
+var(--gold2)
+);
+color:black;
+font-weight:700;
+}
+
+</style>
+<script>
+
+const PASSWORD = "ourspace";
+
+const galleryImages = [
+"shibani.png"
+];
+
+const musicLibrary = [
 {
-  "images": [
-    "shibani.png"
-  ]
+title:"Khafa",
+file:"music/khafa.mp3",
+cover:"shibani.png"
 }
-{
-  "songs": [
-    {
-      "title": "Khafa",
-      "file": "music/khafa.mp3",
-      "artwork": "shibani.png"
-    }
-  ]
-{
-  "pdfs": [
-    {
-      "title": "Welcome Document",
-      "file": "pdfs/welcome.pdf"
-    }
-  ]
-}
+];
 
-}
-.page-transition{
-    animation:pageFade .55s ease;
-}
+const pdfLibrary = [];
 
-@keyframes pageFade{
-    from{
-        opacity:0;
-        transform:translateY(15px);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
+window.addEventListener("load",()=>{
 
-.hero-image{
-    position:relative;
-}
+setTimeout(()=>{
 
-.hero-image::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:32px;
-}
+const loader =
+document.getElementById("loader");
 
-.quick-card,
-.song-card,
-.pdf-card,
-.timeline-item,
-.info-card{
-    transition:
-    transform .35s ease,
-    box-shadow .35s ease,
-    border-color .35s ease;
-}
+loader.style.opacity="0";
 
-.quick-card:hover,
-.song-card:hover,
-.pdf-card:hover,
-.timeline-item:hover,
-.info-card:hover{
-    border-color:rgba(243,210,122,.5);
-    box-shadow:
-    0 25px 60px rgba(0,0,0,.55),
-    0 0 20px rgba(212,175,55,.12);
-}
+setTimeout(()=>{
 
-::-webkit-scrollbar{
-    width:8px;
-}
+loader.remove();
 
-::-webkit-scrollbar-track{
-    background:#090909;
-}
+},800);
 
-::-webkit-scrollbar-thumb{
-    background:linear-gradient(
-    var(--gold),
-    var(--gold2)
-    );
-    border-radius:50px;
-}
+},1000);
 
-audio::-webkit-media-controls-panel{
-    background:#161616;
-}
-
-audio{
-    border-radius:14px;
-}
-
-.brand{
-    letter-spacing:1px;
-}
-
-.hero-title{
-    letter-spacing:1px;
-}
-
-.hero-card{
-    overflow:hidden;
-    position:relative;
-}
-
-.hero-card::before{
-    content:"";
-    position:absolute;
-    inset:-100%;
-    background:
-    linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,.05),
-    transparent
-    );
-    animation:shine 8s linear infinite;
-}
-
-@keyframes shine{
-    to{
-        transform:translateX(220%);
-    }
-}
-
-.modal img{
-    box-shadow:
-    0 0 60px rgba(212,175,55,.15);
-}
-
-.gallery-item{
-    position:relative;
-}
-
-.gallery-item::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-    linear-gradient(
-    to top,
-    rgba(0,0,0,.35),
-    transparent
-    );
-    opacity:0;
-    transition:.35s;
-}
-
-.gallery-item:hover::after{
-    opacity:1;
-}
-document.body.classList.add("page-transition");
-
-document.addEventListener("click", e => {
-
-    const link = e.target.closest("a");
-
-    if (!link) return;
-
-    const href = link.getAttribute("href");
-
-    if (
-        !href ||
-        href.startsWith("#") ||
-        href.startsWith("http")
-    ) {
-        return;
-    }
-
-    e.preventDefault();
-
-    document.body.style.opacity = "0";
-
-    setTimeout(() => {
-
-        window.location.href = href;
-
-    }, 220);
+createParticles();
+initReveal();
+renderGallery();
+renderMusic();
+renderPDFs();
 
 });
+
+function createParticles(){
+
+const container =
+document.getElementById("particles");
+
+for(let i=0;i<50;i++){
+
+const p =
+document.createElement("div");
+
+p.className="particle";
+
+const size =
+Math.random()*5+2;
+
+p.style.width =
+size+"px";
+
+p.style.height =
+size+"px";
+
+p.style.left =
+Math.random()*100+"%";
+
+p.style.animationDuration =
+(Math.random()*15+10)+"s";
+
+p.style.opacity =
+Math.random();
+
+container.appendChild(p);
+
+}
+
+}
+
+function initReveal(){
+
+const observer =
+new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+});
+
+},{
+threshold:.15
+});
+
+document
+.querySelectorAll(".fade")
+.forEach(el=>{
+
+observer.observe(el);
+
+});
+
+}
+
+document
+.getElementById("unlockBtn")
+.addEventListener("click",()=>{
+
+const value =
+document
+.getElementById("passwordInput")
+.value
+.trim();
+
+if(value===PASSWORD){
+
+document
+.getElementById("mainContent")
+.classList.remove("hidden");
+
+document
+.getElementById("lockBox")
+.style.display="none";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+});
+
+function renderGallery(){
+
+const container =
+document.getElementById("galleryGrid");
+
+galleryImages.forEach(image=>{
+
+const card =
+document.createElement("div");
+
+card.className =
+"gallery-card glass fade";
+
+card.innerHTML = `
+<img
+src="${image}"
+alt="photo">
+`;
+
+card.onclick=()=>{
+
+openImage(image);
+
+};
+
+container.appendChild(card);
+
+});
+
+}
+
+function openImage(src){
+
+const modal =
+document.getElementById("imageModal");
+
+const img =
+document.getElementById("modalImage");
+
+img.src = src;
+
+modal.style.display="flex";
+
+}
+
+document
+.getElementById("imageModal")
+.onclick=()=>{
+
+document
+.getElementById("imageModal")
+.style.display="none";
+
+};
+
+function renderMusic(){
+
+const container =
+document.getElementById("musicContainer");
+
+musicLibrary.forEach(song=>{
+
+const card =
+document.createElement("div");
+
+card.className =
+"music-card glass fade";
+
+card.innerHTML = `
+
+<div
+style="
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:14px;
+">
+
+<img
+src="${song.cover}"
+style="
+width:80px;
+height:80px;
+object-fit:cover;
+border-radius:18px;
+">
+
+<div>
+
+<div
+style="
+color:var(--gold2);
+font-weight:700;
+">
+
+${song.title}
+
+</div>
+
+<div
+style="
+color:var(--muted);
+font-size:.9rem;
+">
+
+Premium Audio
+
+</div>
+
+</div>
+
+</div>
+
+<audio
+controls
+style="
+width:100%;
+">
+
+<source
+src="${song.file}"
+type="audio/mpeg">
+
+</audio>
+
+`;
+
+container.appendChild(card);
+
+});
+
+}
+    function renderPDFs(){
+
+const container =
+document.getElementById("pdfContainer");
+
+if(pdfLibrary.length===0){
+
+const card =
+document.createElement("div");
+
+card.className =
+"pdf-card glass fade";
+
+card.innerHTML=`
+
+<div
+style="
+color:var(--gold2);
+font-size:1.1rem;
+font-weight:700;
+margin-bottom:8px;
+">
+
+Library Ready
+
+</div>
+
+<div
+style="
+color:var(--muted);
+line-height:1.8;
+">
+
+Upload PDF files later and
+add them to the library.
+
+</div>
+
+`;
+
+container.appendChild(card);
+
+return;
+
+}
+
+pdfLibrary.forEach(pdf=>{
+
+const card =
+document.createElement("div");
+
+card.className =
+"pdf-card glass fade";
+
+card.innerHTML=`
+
+<div
+style="
+color:var(--gold2);
+font-size:1.1rem;
+font-weight:700;
+margin-bottom:8px;
+">
+
+${pdf.title}
+
+</div>
+
+<div
+style="
+color:var(--muted);
+">
+
+PDF Document
+
+</div>
+
+<a
+href="${pdf.file}"
+target="_blank"
+class="pdf-btn">
+
+Open PDF
+
+</a>
+
+`;
+
+container.appendChild(card);
+
+});
+
+}
+
+const nav =
+document.createElement("div");
+
+nav.className="glass";
+
+nav.style.position="fixed";
+nav.style.bottom="14px";
+nav.style.left="50%";
+nav.style.transform="translateX(-50%)";
+nav.style.width="calc(100% - 24px)";
+nav.style.maxWidth="950px";
+nav.style.padding="10px";
+nav.style.borderRadius="30px";
+nav.style.zIndex="999";
+
+nav.innerHTML=`
+
+<div
+style="
+display:flex;
+justify-content:space-around;
+align-items:center;
+">
+
+<div
+style="
+color:var(--gold2);
+font-size:.8rem;
+">
+
+Home
+
+</div>
+
+<div
+style="
+color:#9f9f9f;
+font-size:.8rem;
+">
+
+Gallery
+
+</div>
+
+<div
+style="
+color:#9f9f9f;
+font-size:.8rem;
+">
+
+Music
+
+</div>
+
+<div
+style="
+color:#9f9f9f;
+font-size:.8rem;
+">
+
+Library
+
+</div>
+
+</div>
+
+`;
+
+document.body.appendChild(nav);
+
+</script>
+
+</body>
+</html>
