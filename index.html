@@ -1,1057 +1,914 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Our Space Ultimate Signature Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --gold-primary: #d4af37;
+            --gold-secondary: #aa7c11;
+            --gold-light: #f3e5ab;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --glass-bg: rgba(18, 18, 18, 0.6);
+            --glass-border: rgba(212, 175, 55, 0.2);
+            --glass-blur: blur(20px);
+            --font-display: 'Cinzel', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap');
 
-<title>Our Space Signature Edition</title>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-<meta name="theme-color" content="#050505">
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+        .loader-logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--gold-primary);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forward 0.5s;
+        }
 
-<style>
+        .loader-bar {
+            width: 150px;
+            height: 2px;
+            background: rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
 
-:root{
---bg:#050505;
---bg2:#0b0b0b;
---glass:rgba(255,255,255,.05);
---glass2:rgba(255,255,255,.08);
---gold:#c9a24a;
---gold2:#f2da90;
---text:#ffffff;
---muted:#b7b7b7;
---shadow:0 25px 80px rgba(0,0,0,.55);
---radius:32px;
-}
+        .loader-progress {
+            position: absolute;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--gold-secondary), var(--gold-primary));
+            animation: loadProgress 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
-}
+        /* Particle Canvas */
+        #canvas-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-html{
-scroll-behavior:smooth;
-}
+        /* Gateway Wall (Welcome & Password) */
+        #gateway-wall {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.85)), url('photos/hero.jpg') center/cover no-repeat;
+            z-index: 9000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+            padding: 20px;
+        }
 
-body{
-font-family:'Inter',sans-serif;
-background:
-radial-gradient(circle at top left,rgba(201,162,74,.10),transparent 35%),
-radial-gradient(circle at top right,rgba(201,162,74,.05),transparent 35%),
-#050505;
-color:white;
-overflow-x:hidden;
-min-height:100vh;
-}
+        .gateway-container {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: translateY(0);
+            transition: all 0.5s ease;
+        }
 
-img{
-display:block;
-max-width:100%;
-}
+        .gateway-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary), var(--gold-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
 
-a{
-text-decoration:none;
-color:inherit;
-}
+        .gateway-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
 
-button{
-border:none;
-outline:none;
-font-family:inherit;
-cursor:pointer;
-}
+        .gold-btn {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+            color: #000;
+            border: none;
+            padding: 16px 32px;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
-input{
-outline:none;
-border:none;
-font-family:inherit;
-}
+        .gold-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2);
+        }
 
-.loader{
-position:fixed;
-inset:0;
-background:black;
-z-index:999999;
-display:flex;
-justify-content:center;
-align-items:center;
-}
+        .password-interface {
+            display: none;
+            width: 100%;
+        }
 
-.loader-ring{
-width:95px;
-height:95px;
-border-radius:50%;
-border:3px solid rgba(255,255,255,.08);
-border-top:3px solid var(--gold2);
-animation:spin 1s linear infinite;
-}
+        .pass-input-wrapper {
+            position: relative;
+            margin-bottom: 25px;
+        }
 
-@keyframes spin{
-to{
-transform:rotate(360deg);
-}
-}
+        .pass-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 4px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
 
-.particles{
-position:fixed;
-inset:0;
-pointer-events:none;
-overflow:hidden;
-z-index:-1;
-}
+        .pass-input:focus {
+            border-color: var(--gold-primary);
+        }
 
-.particle{
-position:absolute;
-border-radius:50%;
-background:rgba(242,218,144,.15);
-animation:float linear infinite;
-}
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+            font-weight: 500;
+        }
 
-@keyframes float{
-from{
-transform:translateY(110vh);
-}
-to{
-transform:translateY(-120px);
-}
-}
+        /* Main Shell Layout */
+        #app-shell {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            z-index: 2;
+            padding-bottom: 90px;
+            display: none;
+        }
 
-.app{
-width:100%;
-max-width:1200px;
-margin:auto;
-padding:18px 18px 140px;
-}
+        /* Navigation Systems */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 450px;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 8000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
 
-.glass{
-background:var(--glass);
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.08);
-box-shadow:var(--shadow);
-}
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+            flex: 1;
+        }
 
-.hero{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:22px;
-}
+        .nav-item i {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+            transition: transform 0.3s;
+        }
 
-.hero-image{
-width:100%;
-height:520px;
-object-fit:cover;
-border-radius:38px;
-border:1px solid rgba(255,255,255,.08);
-box-shadow:var(--shadow);
-}
+        .nav-item.active {
+            color: var(--gold-primary);
+        }
 
-.hero-card{
-padding:32px;
-border-radius:var(--radius);
-position:relative;
-overflow:hidden;
-}
+        .nav-item.active i {
+            transform: translateY(-4px);
+        }
 
-.hero-card::before{
-content:'';
-position:absolute;
-inset:-150%;
-background:
-linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,.05),
-transparent
-);
-animation:shine 8s linear infinite;
-}
+        /* App Sections Base */
+        .app-section {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+            padding: 30px 20px 40px 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
 
-@keyframes shine{
-100%{
-transform:translateX(220%);
-}
-}
+        .app-section.active-section {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-.hero-title{
-font-family:'Cormorant Garamond',serif;
-font-size:4.5rem;
-line-height:1;
-color:var(--gold2);
-}
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 10px;
+        }
 
-.hero-subtitle{
-margin-top:14px;
-line-height:1.9;
-color:var(--muted);
-}
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: #fff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 12px;
+        }
 
-.password-box{
-padding:22px;
-border-radius:var(--radius);
-}
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 1px;
+            background: var(--gold-primary);
+        }
 
-.password-input{
-width:100%;
-padding:18px;
-border-radius:18px;
-background:rgba(255,255,255,.05);
-color:white;
-}
+        /* Animations */
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
 
-.enter-btn{
-width:100%;
-padding:18px;
-margin-top:14px;
-border-radius:18px;
-background:
-linear-gradient(
-135deg,
-var(--gold),
-var(--gold2)
-);
-font-weight:700;
-color:black;
-}
-
-.hidden{
-display:none;
-}
-
-.section{
-margin-top:28px;
-}
-
-.section-title{
-font-family:'Cormorant Garamond',serif;
-font-size:2.6rem;
-margin-bottom:18px;
-color:var(--gold2);
-}
-
-.quick-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
-}
-
-.quick-card{
-padding:22px;
-border-radius:26px;
-}
-
-.quick-card h3{
-color:var(--gold2);
-margin-bottom:10px;
-}
-
-.quick-card p{
-color:var(--muted);
-line-height:1.7;
-}
-
-.fade{
-opacity:0;
-transform:translateY(30px);
-transition:.8s;
-}
-
-.fade.show{
-opacity:1;
-transform:none;
-}
-
-@media(min-width:768px){
-
-.quick-grid{
-grid-template-columns:repeat(4,1fr);
-}
-
-.hero{
-min-height:85vh;
-}
-
-}
-
-</style>
-
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="loader" id="loader">
-<div class="loader-ring"></div>
-</div>
-
-<div class="particles" id="particles"></div>
-
-<div class="app">
-
-<section class="hero">
-
-<img
-src="shibani.png"
-class="hero-image fade"
-alt="cover">
-
-<div class="hero-card glass fade">
-
-<h1 class="hero-title">
-Our Space
-</h1>
-
-<p class="hero-subtitle">
-A luxury private digital universe crafted for memories,
-music, emotions, stories and timeless moments.
-</p>
-
-</div>
-
-<div
-class="password-box glass fade"
-id="lockBox">
-
-<input
-type="password"
-id="passwordInput"
-class="password-input"
-placeholder="Enter Password">
-
-<button
-id="unlockBtn"
-class="enter-btn">
-Enter Space
-</button>
-
-</div>
-
-<div
-id="mainContent"
-class="hidden">
-
-<div class="quick-grid">
-
-<div class="quick-card glass fade">
-<h3>Gallery</h3>
-<p>Luxury image collection</p>
-</div>
-
-<div class="quick-card glass fade">
-<h3>Music</h3>
-<p>Premium soundtrack library</p>
-</div>
-
-<div class="quick-card glass fade">
-<h3>Memories</h3>
-<p>Special moments timeline</p>
-</div>
-
-<div class="quick-card glass fade">
-<h3>Library</h3>
-<p>PDF archive collection</p>
-</div>
-
-</div>
-    <section class="section">
-
-<h2 class="section-title fade">
-Featured Memory
-</h2>
-
-<div class="hero-card glass fade">
-
-<p class="hero-subtitle">
-
-Every memory deserves a beautiful place.
-Every photograph deserves a timeless frame.
-Every moment deserves a story that lives forever.
-
-</p>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2 class="section-title fade">
-Luxury Gallery
-</h2>
-
-<div
-id="galleryGrid"
-style="
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
-">
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2 class="section-title fade">
-Music Collection
-</h2>
-
-<div
-id="musicContainer">
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2 class="section-title fade">
-PDF Library
-</h2>
-
-<div
-id="pdfContainer">
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2 class="section-title fade">
-Memories Timeline
-</h2>
-
-<div
-id="timelineContainer">
-
-<div class="hero-card glass fade">
-
-<h3
-style="
-color:var(--gold2);
-margin-bottom:10px;
-">
-
-Beginning
-
-</h3>
-
-<p class="hero-subtitle">
-
-The story started with a beautiful moment.
-
-</p>
-
-</div>
-
-<br>
-
-<div class="hero-card glass fade">
-
-<h3
-style="
-color:var(--gold2);
-margin-bottom:10px;
-">
-
-Journey
-
-</h3>
-
-<p class="hero-subtitle">
-
-Every memory became part of something special.
-
-</p>
-
-</div>
-
-<br>
-
-<div class="hero-card glass fade">
-
-<h3
-style="
-color:var(--gold2);
-margin-bottom:10px;
-">
-
-Forever
-
-</h3>
-
-<p class="hero-subtitle">
-
-Some moments never leave the heart.
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2 class="section-title fade">
-About
-</h2>
-
-<div class="hero-card glass fade">
-
-<img
-src="shibani.png"
-style="
-width:140px;
-height:140px;
-border-radius:50%;
-object-fit:cover;
-margin:auto;
-border:3px solid var(--gold2);
-">
-
-<h3
-style="
-text-align:center;
-margin-top:18px;
-color:var(--gold2);
-font-size:2rem;
-font-family:'Cormorant Garamond',serif;
-">
-
-Signature Edition
-
-</h3>
-
-<p
-class="hero-subtitle"
-style="
-text-align:center;
-">
-
-A premium private digital experience
-built to preserve memories,
-music and meaningful moments.
-
-</p>
-
-</div>
-
-</section>
-
-</div>
-
-<div
-id="imageModal"
-style="
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.95);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:999999;
-">
-
-<img
-id="modalImage"
-style="
-max-width:95%;
-max-height:90%;
-border-radius:28px;
-">
-
-</div>
-
-<style>
-
-.gallery-card{
-overflow:hidden;
-border-radius:24px;
-cursor:pointer;
-}
-
-.gallery-card img{
-width:100%;
-height:220px;
-object-fit:cover;
-display:block;
-}
-
-.music-card{
-padding:18px;
-border-radius:24px;
-margin-bottom:14px;
-}
-
-.pdf-card{
-padding:18px;
-border-radius:24px;
-margin-bottom:14px;
-}
-
-.pdf-btn{
-display:inline-block;
-margin-top:12px;
-padding:12px 18px;
-border-radius:14px;
-background:
-linear-gradient(
-135deg,
-var(--gold),
-var(--gold2)
-);
-color:black;
-font-weight:700;
-}
-
-</style>
-<script>
-
-const PASSWORD = "ourspace";
-
-const galleryImages = [
-"shibani.png"
-];
-
-const musicLibrary = [
-{
-title:"Khafa",
-file:"music/khafa.mp3",
-cover:"shibani.png"
-}
-];
-
-const pdfLibrary = [];
-
-window.addEventListener("load",()=>{
-
-setTimeout(()=>{
-
-const loader =
-document.getElementById("loader");
-
-loader.style.opacity="0";
-
-setTimeout(()=>{
-
-loader.remove();
-
-},800);
-
-},1000);
-
-createParticles();
-initReveal();
-renderGallery();
-renderMusic();
-renderPDFs();
-
-});
-
-function createParticles(){
-
-const container =
-document.getElementById("particles");
-
-for(let i=0;i<50;i++){
-
-const p =
-document.createElement("div");
-
-p.className="particle";
-
-const size =
-Math.random()*5+2;
-
-p.style.width =
-size+"px";
-
-p.style.height =
-size+"px";
-
-p.style.left =
-Math.random()*100+"%";
-
-p.style.animationDuration =
-(Math.random()*15+10)+"s";
-
-p.style.opacity =
-Math.random();
-
-container.appendChild(p);
-
-}
-
-}
-
-function initReveal(){
-
-const observer =
-new IntersectionObserver(entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-entry.target.classList.add("show");
-
-}
-
-});
-
-},{
-threshold:.15
-});
-
-document
-.querySelectorAll(".fade")
-.forEach(el=>{
-
-observer.observe(el);
-
-});
-
-}
-
-document
-.getElementById("unlockBtn")
-.addEventListener("click",()=>{
-
-const value =
-document
-.getElementById("passwordInput")
-.value
-.trim();
-
-if(value===PASSWORD){
-
-document
-.getElementById("mainContent")
-.classList.remove("hidden");
-
-document
-.getElementById("lockBox")
-.style.display="none";
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-});
-
-function renderGallery(){
-
-const container =
-document.getElementById("galleryGrid");
-
-galleryImages.forEach(image=>{
-
-const card =
-document.createElement("div");
-
-card.className =
-"gallery-card glass fade";
-
-card.innerHTML = `
-<img
-src="${image}"
-alt="photo">
-`;
-
-card.onclick=()=>{
-
-openImage(image);
-
-};
-
-container.appendChild(card);
-
-});
-
-}
-
-function openImage(src){
-
-const modal =
-document.getElementById("imageModal");
-
-const img =
-document.getElementById("modalImage");
-
-img.src = src;
-
-modal.style.display="flex";
-
-}
-
-document
-.getElementById("imageModal")
-.onclick=()=>{
-
-document
-.getElementById("imageModal")
-.style.display="none";
-
-};
-
-function renderMusic(){
-
-const container =
-document.getElementById("musicContainer");
-
-musicLibrary.forEach(song=>{
-
-const card =
-document.createElement("div");
-
-card.className =
-"music-card glass fade";
-
-card.innerHTML = `
-
-<div
-style="
-display:flex;
-align-items:center;
-gap:14px;
-margin-bottom:14px;
-">
-
-<img
-src="${song.cover}"
-style="
-width:80px;
-height:80px;
-object-fit:cover;
-border-radius:18px;
-">
-
-<div>
-
-<div
-style="
-color:var(--gold2);
-font-weight:700;
-">
-
-${song.title}
-
-</div>
-
-<div
-style="
-color:var(--muted);
-font-size:.9rem;
-">
-
-Premium Audio
-
-</div>
-
-</div>
-
-</div>
-
-<audio
-controls
-style="
-width:100%;
-">
-
-<source
-src="${song.file}"
-type="audio/mpeg">
-
-</audio>
-
-`;
-
-container.appendChild(card);
-
-});
-
-}
-    function renderPDFs(){
-
-const container =
-document.getElementById("pdfContainer");
-
-if(pdfLibrary.length===0){
-
-const card =
-document.createElement("div");
-
-card.className =
-"pdf-card glass fade";
-
-card.innerHTML=`
-
-<div
-style="
-color:var(--gold2);
-font-size:1.1rem;
-font-weight:700;
-margin-bottom:8px;
-">
-
-Library Ready
-
-</div>
-
-<div
-style="
-color:var(--muted);
-line-height:1.8;
-">
-
-Upload PDF files later and
-add them to the library.
-
-</div>
-
-`;
-
-container.appendChild(card);
-
-return;
-
-}
-
-pdfLibrary.forEach(pdf=>{
-
-const card =
-document.createElement("div");
-
-card.className =
-"pdf-card glass fade";
-
-card.innerHTML=`
-
-<div
-style="
-color:var(--gold2);
-font-size:1.1rem;
-font-weight:700;
-margin-bottom:8px;
-">
-
-${pdf.title}
-
-</div>
-
-<div
-style="
-color:var(--muted);
-">
-
-PDF Document
-
-</div>
-
-<a
-href="${pdf.file}"
-target="_blank"
-class="pdf-btn">
-
-Open PDF
-
-</a>
-
-`;
-
-container.appendChild(card);
-
-});
-
-}
-
-const nav =
-document.createElement("div");
-
-nav.className="glass";
-
-nav.style.position="fixed";
-nav.style.bottom="14px";
-nav.style.left="50%";
-nav.style.transform="translateX(-50%)";
-nav.style.width="calc(100% - 24px)";
-nav.style.maxWidth="950px";
-nav.style.padding="10px";
-nav.style.borderRadius="30px";
-nav.style.zIndex="999";
-
-nav.innerHTML=`
-
-<div
-style="
-display:flex;
-justify-content:space-around;
-align-items:center;
-">
-
-<div
-style="
-color:var(--gold2);
-font-size:.8rem;
-">
-
-Home
-
-</div>
-
-<div
-style="
-color:#9f9f9f;
-font-size:.8rem;
-">
-
-Gallery
-
-</div>
-
-<div
-style="
-color:#9f9f9f;
-font-size:.8rem;
-">
-
-Music
-
-</div>
-
-<div
-style="
-color:#9f9f9f;
-font-size:.8rem;
-">
-
-Library
-
-</div>
-
-</div>
-
-`;
-
-document.body.appendChild(nav);
-
-</script>
-
+    <div id="loading-screen">
+        <div class="loader-logo">OUR SPACE</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+
+    <canvas id="canvas-particles"></canvas>
+
+    <div id="gateway-wall">
+        <div class="gateway-container" id="welcome-panel">
+            <div class="gateway-title">OUR SPACE</div>
+            <div class="gateway-subtitle">ULTIMATE SIGNATURE EDITION</div>
+            <button class="gold-btn" onclick="showPasswordScreen()">ENTER SPACE</button>
+        </div>
+
+        <div class="gateway-container" id="password-panel" style="display: none;">
+            <div class="gateway-title">AUTHENTICATE</div>
+            <div class="gateway-subtitle">ENTER THE SIGNATURE KEY</div>
+            <div class="password-interface">
+                <div class="pass-input-wrapper">
+                    <input type="password" id="space-key" class="pass-input" placeholder="••••">
+                    <div id="auth-error" class="error-msg">ACCESS DENIED • INVALID KEY</div>
+                </div>
+                <button class="gold-btn" onclick="verifyKey()">VERIFY SECURELY</button>
+            </div>
+        </div>
+    </div>
+        <div id="app-shell">
+        <section id="home-sec" class="app-section active-section">
+            <div class="hero-wrapper" style="position: relative; width: 100%; height: 320px; border-radius: 24px; overflow: hidden; margin-bottom: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.7); border: 1px solid var(--glass-border);">
+                <div class="hero-img" style="width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(10,10,10,0.9)), url('photos/hero.jpg') center/cover no-repeat;"></div>
+                <div class="hero-content" style="position: absolute; bottom: 20px; left: 20px; right: 20px;">
+                    <div style="font-family: var(--font-display); font-size: 1.4rem; color: #fff; letter-spacing: 2px; margin-bottom: 4px;">WELCOME TO OUR REFUGE</div>
+                    <div style="font-size: 0.85rem; color: var(--gold-primary); letter-spacing: 1px; font-weight: 500;">SIGNATURE EDITION</div>
+                </div>
+            </div>
+
+            <div class="quick-matrix" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px;">
+                <div class="matrix-card" onclick="switchSection('gallery-sec')" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; text-align: center; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: transform 0.3s;">
+                    <i class="fa-solid fa-images" style="font-size: 1.8rem; color: var(--gold-primary); margin-bottom: 12px;"></i>
+                    <div style="font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 1px; font-weight: 600;">GALLERY</div>
+                </div>
+                <div class="matrix-card" onclick="switchSection('music-sec')" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; text-align: center; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: transform 0.3s;">
+                    <i class="fa-solid fa-music" style="font-size: 1.8rem; color: var(--gold-primary); margin-bottom: 12px;"></i>
+                    <div style="font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 1px; font-weight: 600;">SOUNDTRACK</div>
+                </div>
+                <div class="matrix-card" onclick="switchSection('pdfs-sec')" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; text-align: center; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: transform 0.3s;">
+                    <i class="fa-solid fa-book-bookmark" style="font-size: 1.8rem; color: var(--gold-primary); margin-bottom: 12px;"></i>
+                    <div style="font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 1px; font-weight: 600;">LIBRARY</div>
+                </div>
+                <div class="matrix-card" onclick="switchSection('memories-sec')" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; text-align: center; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: transform 0.3s;">
+                    <i class="fa-solid fa-timeline" style="font-size: 1.8rem; color: var(--gold-primary); margin-bottom: 12px;"></i>
+                    <div style="font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 1px; font-weight: 600;">CHRONICLES</div>
+                </div>
+            </div>
+
+            <div class="featured-quote" style="background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(10,10,10,0.9)); border-left: 3px solid var(--gold-primary); padding: 20px; border-radius: 0 16px 16px 0; margin-bottom: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+                <i class="fa-solid fa-quote-left" style="color: var(--gold-secondary); font-size: 1.2rem; margin-bottom: 8px; display: block;"></i>
+                <p style="font-size: 0.95rem; font-style: italic; color: #e0e0e0; line-height: 1.6;">"Luxury is not the presence of noise, it is the fine art of absolute connection within shared stillness."</p>
+            </div>
+        </section>
+
+        <section id="gallery-sec" class="app-section">
+            <div class="section-header">
+                <h2 class="section-title">Visual Gallery</h2>
+            </div>
+            
+            <div class="gallery-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                <div class="gallery-item" onclick="openLightbox(this)" style="position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid rgba(212,175,55,0.15); box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
+                    <img src="photos/photo1.jpg" alt="Memory One" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600'">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)" style="position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid rgba(212,175,55,0.15); box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
+                    <img src="photos/photo2.jpg" alt="Memory Two" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.src='https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=600'">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)" style="position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid rgba(212,175,55,0.15); box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
+                    <img src="photos/photo3.jpg" alt="Memory Three" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.src='https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=600'">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)" style="position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid rgba(212,175,55,0.15); box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
+                    <img src="photos/photo4.jpg" alt="Memory Four" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.src='https://images.unsplash.com/photo-1618005198143-e5283b519a7f?q=80&w=600'">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)" style="position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid rgba(212,175,55,0.15); box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
+                    <img src="photos/photo5.jpg" alt="Memory Five" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.src='https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=600'">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)" style="position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid rgba(212,175,55,0.15); box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
+                    <img src="photos/photo6.jpg" alt="Memory Six" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;" onerror="this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=600'">
+                </div>
+            </div>
+        </section>
+                <section id="music-sec" class="app-section">
+            <div class="section-header">
+                <h2 class="section-title">Soundtrack</h2>
+            </div>
+
+            <div class="audio-engine-card" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px 20px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); box-shadow: 0 15px 35px rgba(0,0,0,0.5); text-align: center; margin-bottom: 30px;">
+                <div class="deck-vinyl" style="position: relative; width: 160px; height: 160px; margin: 0 auto 25px auto; border-radius: 50%; background: #111; border: 4px solid #1a1a1a; box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 0 10px #000; display: flex; align-items: center; justify-content: center;">
+                    <div id="vinyl-cover" style="width: 144px; height: 144px; border-radius: 50%; background: url('photos/hero.jpg') center/cover no-repeat; transition: transform 0.5s ease;"></div>
+                    <div style="position: absolute; width: 25px; height: 25px; background: var(--bg-primary); border-radius: 50%; border: 2px solid var(--gold-primary); box-shadow: inset 0 0 5px rgba(0,0,0,0.8);"></div>
+                </div>
+
+                <div class="track-metadata" style="margin-bottom: 25px;">
+                    <div id="deck-track-title" style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 6px; color: #fff;">Signature Theme One</div>
+                    <div id="deck-track-artist" style="font-size: 0.8rem; color: var(--gold-primary); letter-spacing: 1px; text-transform: uppercase;">Our Space Luxury Collection</div>
+                </div>
+
+                <audio id="core-audio-element" src="music/song1.mp3"></audio>
+
+                <div class="timeline-container" style="margin-bottom: 25px; padding: 0 10px;">
+                    <div id="track-progress-wrapper" style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; position: relative; cursor: pointer;">
+                        <div id="track-progress-bar" style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold-secondary), var(--gold-primary)); border-radius: 2px;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; font-weight: 500;">
+                        <span id="track-time-current">0:00</span>
+                        <span id="track-time-duration">0:00</span>
+                    </div>
+                </div>
+
+                <div class="deck-controls" style="display: flex; justify-content: center; align-items: center; gap: 30px;">
+                    <button onclick="prevTrack()" style="background: none; border: none; color: var(--text-secondary); font-size: 1.2rem; cursor: pointer; transition: color 0.3s;"><i class="fa-solid fa-backward-step"></i></button>
+                    <button id="master-play-btn" onclick="togglePlayback()" style="background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary)); border: none; width: 56px; height: 56px; border-radius: 50%; color: #000; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 15px rgba(212,175,55,0.3); transition: transform 0.2s;"><i class="fa-solid fa-play" style="margin-left: 3px;"></i></button>
+                    <button onclick="nextTrack()" style="background: none; border: none; color: var(--text-secondary); font-size: 1.2rem; cursor: pointer; transition: color 0.3s;"><i class="fa-solid fa-forward-step"></i></button>
+                </div>
+            </div>
+
+            <div id="playlist-rack" style="display: flex; flex-direction: column; gap: 12px;">
+                </div>
+        </section>
+
+        <section id="pdfs-sec" class="app-section">
+            <div class="section-header">
+                <h2 class="section-title">Library</h2>
+            </div>
+
+            <div class="search-vault-wrapper" style="position: relative; margin-bottom: 25px;">
+                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--gold-primary); font-size: 0.9rem;"></i>
+                <input type="text" id="library-search-input" oninput="filterLibrary()" placeholder="Search documents..." style="width: 100%; background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 14px 16px 14px 44px; border-radius: 14px; color: #fff; font-size: 0.9rem; outline: none; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: border-color 0.3s;">
+            </div>
+
+            <div id="library-shelf" style="display: flex; flex-direction: column; gap: 15px;">
+                </div>
+        </section>
+                <section id="memories-sec" class="app-section">
+            <div class="section-header">
+                <h2 class="section-title">Chronicles</h2>
+            </div>
+
+            <div class="timeline-axis" style="position: relative; padding-left: 24px;">
+                <div style="position: absolute; left: 4px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--gold-primary), transparent);"></div>
+                
+                <div class="timeline-milestone" style="position: relative; margin-bottom: 30px;">
+                    <div style="position: absolute; left: -24px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #000; border: 2px solid var(--gold-primary); box-shadow: 0 0 8px var(--gold-primary);"></div>
+                    <div style="font-family: var(--font-display); font-size: 0.8rem; color: var(--gold-primary); letter-spacing: 1px; margin-bottom: 4px; font-weight: 700;">MAY 2025</div>
+                    <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 14px; padding: 16px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 6px; font-family: var(--font-display); letter-spacing: 0.5px;">The Genesis Milestone</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); line-gradient: 1.5;">Our Space was initialized. The inception of a completely private vault crafted strictly for our collective experiences and signature content retention.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-milestone" style="position: relative; margin-bottom: 30px;">
+                    <div style="position: absolute; left: -24px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #000; border: 2px solid var(--gold-primary); box-shadow: 0 0 8px var(--gold-primary);"></div>
+                    <div style="font-family: var(--font-display); font-size: 0.8rem; color: var(--gold-primary); letter-spacing: 1px; margin-bottom: 4px; font-weight: 700;">OCTOBER 2025</div>
+                    <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 14px; padding: 16px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 6px; font-family: var(--font-display); letter-spacing: 0.5px;">Expansion of the Media Core</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); line-gradient: 1.5;">Integration of the premium sound system deck and automated document filing modules into a unified ultra-sleek user layout interface.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-milestone" style="position: relative; margin-bottom: 30px;">
+                    <div style="position: absolute; left: -24px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #000; border: 2px solid var(--gold-primary); box-shadow: 0 0 8px var(--gold-primary);"></div>
+                    <div style="font-family: var(--font-display); font-size: 0.8rem; color: var(--gold-primary); letter-spacing: 1px; margin-bottom: 4px; font-weight: 700;">CURRENT RUNTIME</div>
+                    <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 14px; padding: 16px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 6px; font-family: var(--font-display); letter-spacing: 0.5px;">Ultimate Signature Edition</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); line-gradient: 1.5;">Refinement of full system asset access infrastructure using modern styling principles and dark aesthetic composition parameters.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-sec" class="app-section">
+            <div class="section-header">
+                <h2 class="section-title">The Profiles</h2>
+            </div>
+
+            <div class="profile-card-prime" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px 20px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); text-align: center; margin-bottom: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
+                <div style="width: 90px; height: 90px; margin: 0 auto 16px auto; border-radius: 50%; border: 2px solid var(--gold-primary); padding: 4px; box-shadow: 0 0 15px rgba(212,175,55,0.2);">
+                    <div style="width: 100%; height: 100%; border-radius: 50%; background: url('photos/hero.jpg') center/cover no-repeat;"></div>
+                </div>
+                <h3 style="font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 1px; margin-bottom: 6px;">Signature System Controller</h3>
+                <p style="font-size: 0.8rem; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; font-weight: 500;">Principal Administrator</p>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; max-width: 280px; margin: 0 auto;">Managing directories, individual media nodes, and specific document archives inside the localized storage layer.</p>
+            </div>
+
+            <div class="message-wall-container" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 24px 20px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
+                <h3 style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 1px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-pen-nib" style="color: var(--gold-primary);"></i> Space Message Board</h3>
+                
+                <div id="wall-feed" style="display: flex; flex-direction: column; gap: 12px; max-height: 240px; overflow-y: auto; margin-bottom: 16px; padding-right: 4px;">
+                    <div style="background: rgba(255,255,255,0.03); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gold-primary); margin-bottom: 4px; font-weight: 600;"><span>System Admin</span><span>Secure Log</span></div>
+                        <p style="font-size: 0.8rem; color: #e0e0e0; line-height: 1.4;">Welcome to the new architectural build of Our Space. All sub-folders remain online.</p>
+                    </div>
+                </div>
+
+                <div class="wall-input-system" style="display: flex; gap: 10px;">
+                    <input type="text" id="wall-message-input" placeholder="Append encrypted memo..." style="flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 0.85rem; outline: none; transition: border-color 0.3s;">
+                    <button onclick="postToWall()" style="background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary)); border: none; width: 44px; height: 44px; border-radius: 12px; color: #000; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(212,175,55,0.2);"><i class="fa-solid fa-paper-plane" style="font-size: 0.9rem;"></i></button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="global-fab-deck" onclick="switchSection('music-sec')" style="position: fixed; bottom: 100px; right: 20px; width: 48px; height: 48px; background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.1rem; box-shadow: 0 6px 20px rgba(0,0,0,0.5); z-index: 7999; cursor: pointer; display: none;">
+        <i class="fa-solid fa-compact-disc fa-spin" style="animation-duration: 4s;"></i>
+    </div>
+
+    <nav class="bottom-nav" id="bottom-nav-deck" style="display: none;">
+        <div class="nav-item active" onclick="switchSection('home-sec')" id="nav-home-sec"><i class="fa-solid fa-house-chimney-window"></i><span>Home</span></div>
+        <div class="nav-item" onclick="switchSection('gallery-sec')" id="nav-gallery-sec"><i class="fa-solid fa-images"></i><span>Gallery</span></div>
+        <div class="nav-item" onclick="switchSection('music-sec')" id="nav-music-sec"><i class="fa-solid fa-music"></i><span>Audio</span></div>
+        <div class="nav-item" onclick="switchSection('pdfs-sec')" id="nav-pdfs-sec"><i class="fa-solid fa-book-open"></i><span>Library</span></div>
+        <div class="nav-item" onclick="switchSection('memories-sec')" id="nav-memories-sec"><i class="fa-solid fa-timeline"></i><span>Timeline</span></div>
+    </nav>
+
+    <div id="lightbox-portal" onclick="closeLightbox()" style="position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(5,5,5,0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 9500; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1); padding: 20px;">
+        <div style="position: absolute; top: 24px; right: 24px; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></div>
+        <img id="lightbox-display-img" src="" alt="" style="max-width: 100%; max-height: 75vh; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 1px solid rgba(212,175,55,0.25); object-fit: contain;">
+        <div id="lightbox-caption" style="margin-top: 20px; font-family: var(--font-display); font-size: 1rem; color: var(--gold-light); letter-spacing: 1.5px; text-align: center;">Caption</div>
+            </div>
+                <script>
+        // Core System Database - Configure manual directory files here
+        const SystemConfig = {
+            signatureKey: "1234", // Set your password here
+            playlist: [
+                { title: "Signature Theme One", artist: "Our Space Luxury", src: "music/song1.mp3", cover: "photos/hero.jpg" },
+                { title: "Ethereal Echoes", artist: "Ultimate Collection", src: "music/song2.mp3", cover: "photos/photo1.jpg" },
+                { title: "Midnight Sonata", artist: "Signature Edition", src: "music/song3.mp3", cover: "photos/photo2.jpg" }
+            ],
+            library: [
+                { title: "Archived Notes Volume I", filename: "notes1.pdf", path: "pdfs/notes1.pdf", date: "2025-05-12", size: "1.2 MB" },
+                { title: "Chronicle Documentation II", filename: "notes2.pdf", path: "pdfs/notes2.pdf", date: "2025-10-24", size: "2.4 MB" },
+                { title: "Private Structural Blueprints", filename: "blueprints.pdf", path: "pdfs/blueprints.pdf", date: "2026-02-15", size: "4.8 MB" }
+            ]
+        };
+
+        // Global State Engines
+        let currentTrackIdx = 0;
+        const coreAudio = document.getElementById('core-audio-element');
+        let canvas, ctx, particlesArray = [];
+
+        // App Initialization Sequence
+        window.addEventListener('DOMContentLoaded', () => {
+            initAmbientEngine();
+            buildAudioPlaylist();
+            buildDocumentLibrary();
+            
+            // Fade out loader smoothly
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 800);
+            }, 1800);
+        });
+
+        // Gateway System Logic
+        function showPasswordScreen() {
+            document.getElementById('welcome-panel').style.display = 'none';
+            const passPanel = document.getElementById('password-panel');
+            passPanel.style.display = 'block';
+            document.querySelector('.password-interface').style.display = 'block';
+            document.getElementById('space-key').focus();
+        }
+
+        function verifyKey() {
+            const inputKey = document.getElementById('space-key').value;
+            const errorMsg = document.getElementById('auth-error');
+            
+            if (inputKey === SystemConfig.signatureKey) {
+                errorMsg.style.display = 'none';
+                const wall = document.getElementById('gateway-wall');
+                wall.style.transform = 'translateY(-100%)';
+                
+                setTimeout(() => {
+                    wall.style.display = 'none';
+                    document.getElementById('app-shell').style.display = 'block';
+                    document.getElementById('bottom-nav-deck').style.display = 'flex';
+                    // Trigger reflow for animations
+                    switchSection('home-sec');
+                }, 1000);
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('space-key').value = '';
+                // Shake screen effect
+                const container = document.getElementById('password-panel');
+                container.style.transform = 'translateX(10px)';
+                setTimeout(() => container.style.transform = 'translateX(-10px)', 100);
+                setTimeout(() => container.style.transform = 'translateX(0)', 200);
+            }
+        }
+
+        // Section Router Engine
+        function switchSection(sectionId) {
+            // Update Active Navigation Item Visual Layer
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            const activeNav = document.getElementById(`nav-${sectionId}`);
+            if (activeNav) activeNav.classList.add('active');
+
+            // Handle Section Crossfade Mechanics
+            const currentActive = document.querySelector('.app-section.active-section');
+            if (currentActive) {
+                currentActive.style.opacity = '0';
+                currentActive.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    currentActive.classList.remove('active-section');
+                    revealTargetSection(sectionId);
+                }, 300);
+            } else {
+                revealTargetSection(sectionId);
+            }
+        }
+
+        function revealTargetSection(sectionId) {
+            const targetSec = document.getElementById(sectionId);
+            if (targetSec) {
+                targetSec.classList.add('active-section');
+                // Force layout calculation
+                targetSec.offsetHeight;
+                targetSec.style.opacity = '1';
+                targetSec.style.transform = 'translateY(0)';
+                // Sync scroll position
+                document.getElementById('app-shell').scrollTop = 0;
+            }
+        }
+
+        // Premium Lightbox Module
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            const imgAlt = element.querySelector('img').alt;
+            const portal = document.getElementById('lightbox-portal');
+            
+            document.getElementById('lightbox-display-img').src = imgSrc;
+            document.getElementById('lightbox-caption').innerText = imgAlt;
+            
+            portal.style.pointerEvents = 'auto';
+            portal.style.opacity = '1';
+        }
+
+        function closeLightbox() {
+            const portal = document.getElementById('lightbox-portal');
+            portal.style.opacity = '0';
+            portal.style.pointerEvents = 'none';
+        }
+
+        // Music System Infrastructure
+        function buildAudioPlaylist() {
+            const rack = document.getElementById('playlist-rack');
+            rack.innerHTML = '';
+            
+            SystemConfig.playlist.forEach((track, idx) => {
+                const item = document.createElement('div');
+                item.style.cssText = "display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.1); padding: 14px 16px; border-radius: 14px; cursor: pointer; transition: all 0.3s;";
+                item.setAttribute('id', `track-node-${idx}`);
+                item.onclick = () => loadAndPlayTrack(idx);
+                
+                item.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                        <div style="width: 40px; height: 40px; border-radius: 8px; background: url('${track.cover}') center/cover no-repeat; border: 1px solid rgba(212,175,55,0.2);"></div>
+                        <div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 2px;">${track.title}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">${track.artist}</div>
+                        </div>
+                    </div>
+                    <div class="track-status-icon" style="color: var(--gold-primary); font-size: 0.85rem;"><i class="fa-solid fa-play"></i></div>
+                `;
+                rack.appendChild(item);
+            });
+            syncPlaylistVisualState();
+        }
+
+        function syncPlaylistVisualState() {
+            SystemConfig.playlist.forEach((_, idx) => {
+                const node = document.getElementById(`track-node-${idx}`);
+                if (node) {
+                    const iconContainer = node.querySelector('.track-status-icon');
+                    if (idx === currentTrackIdx) {
+                        node.style.background = "rgba(212,175,55,0.06)";
+                        node.style.borderColor = "var(--gold-primary)";
+                        iconContainer.innerHTML = !coreAudio.paused ? '<i class="fa-solid fa-waveform fa-bounce"></i>' : '<i class="fa-solid fa-pause"></i>';
+                    } else {
+                        node.style.background = "rgba(255,255,255,0.02)";
+                        node.style.borderColor = "rgba(212,175,55,0.1)";
+                        iconContainer.innerHTML = '<i class="fa-solid fa-play"></i>';
+                    }
+                }
+            });
+        }
+
+        function loadAndPlayTrack(idx) {
+            if (idx < 0 || idx >= SystemConfig.playlist.length) return;
+            currentTrackIdx = idx;
+            const track = SystemConfig.playlist[currentTrackIdx];
+            
+            coreAudio.src = track.src;
+            document.getElementById('deck-track-title').innerText = track.title;
+            document.getElementById('deck-track-artist').innerText = track.artist;
+            document.getElementById('vinyl-cover').style.backgroundImage = `url('${track.cover}')`;
+            
+            togglePlayback(true);
+        }
+
+        function togglePlayback(forcePlay = false) {
+            const btn = document.getElementById('master-play-btn');
+            const fab = document.getElementById('global-fab-deck');
+            const vinyl = document.getElementById('vinyl-cover');
+            
+            if (coreAudio.paused || forcePlay) {
+                coreAudio.play().then(() => {
+                    btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                    fab.style.display = 'flex';
+                    vinyl.style.transform = 'rotate(360deg)';
+                    // Simple infinite rotation mimicry via js dynamic style update
+                    vinyl.style.transition = 'transform 20s linear';
+                    syncPlaylistVisualState();
+                }).catch(e => console.log("Audio play request optimization interrupted"));
+            } else {
+                coreAudio.pause();
+                btn.innerHTML = '<i class="fa-solid fa-play" style="margin-left: 3px;"></i>';
+                vinyl.style.transition = 'transform 0.5s ease';
+                syncPlaylistVisualState();
+            }
+        }
+
+        function nextTrack() {
+            let next = currentTrackIdx + 1;
+            if (next >= SystemConfig.playlist.length) next = 0;
+            loadAndPlayTrack(next);
+        }
+
+        function prevTrack() {
+            let prev = currentTrackIdx - 1;
+            if (prev < 0) prev = SystemConfig.playlist.length - 1;
+            loadAndPlayTrack(prev);
+        }
+
+        // Native Audio Timeline Mapping Listener
+        coreAudio.addEventListener('timeupdate', () => {
+            const progressWrapper = document.getElementById('track-progress-wrapper');
+            const progressBar = document.getElementById('track-progress-bar');
+            const currentText = document.getElementById('track-time-current');
+            const durationText = document.getElementById('track-time-duration');
+            
+            if (coreAudio.duration) {
+                const percent = (coreAudio.currentTime / coreAudio.duration) * 100;
+                progressBar.style.width = `${percent}%`;
+                
+                // Format times
+                currentText.innerText = formatTimeSec(coreAudio.currentTime);
+                durationText.innerText = formatTimeSec(coreAudio.duration);
+            }
+        });
+
+        coreAudio.addEventListener('ended', () => {
+            nextTrack();
+        });
+
+        document.getElementById('track-progress-wrapper').addEventListener('click', function(e) {
+            const width = this.offsetWidth;
+            const clickX = e.offsetX;
+            if (coreAudio.duration) {
+                coreAudio.currentTime = (clickX / width) * coreAudio.duration;
+            }
+        });
+
+        function formatTimeSec(time) {
+            const mins = Math.floor(time / 60);
+            const secs = Math.floor(time % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Document Library Storage Engine
+        function buildDocumentLibrary() {
+            const shelf = document.getElementById('library-shelf');
+            shelf.innerHTML = '';
+            
+            SystemConfig.library.forEach(doc => {
+                const card = document.createElement('div');
+                card.className = "library-card-node";
+                card.style.cssText = "background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 18px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); display: flex; align-items: center; justify-content: space-between; transition: transform 0.3s;";
+                
+                card.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0;">
+                        <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(212,175,55,0.1); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(212,175,55,0.2); color: var(--gold-primary); font-size: 1.1rem; flex-shrink: 0;"><i class="fa-solid fa-file-pdf"></i></div>
+                        <div style="min-width: 0; flex: 1;">
+                            <div class="doc-target-title" style="font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${doc.title}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); display: flex; gap: 10px;"><span>${doc.size}</span><span>•</span><span>${doc.date}</span></div>
+                        </div>
+                    </div>
+                    <a href="${doc.path}" target="_blank" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold-light); text-decoration: none; font-size: 0.9rem; transition: background 0.3s; margin-left: 12px;"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                `;
+                shelf.appendChild(card);
+            });
+        }
+
+        function filterLibrary() {
+            const query = document.getElementById('library-search-input').value.toLowerCase();
+            document.querySelectorAll('.library-card-node').forEach(card => {
+                const title = card.querySelector('.doc-target-title').innerText.toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Real-time Messaging Subsystem
+        function postToWall() {
+            const input = document.getElementById('wall-message-input');
+            const memo = input.value.trim();
+            if (!memo) return;
+            
+            const feed = document.getElementById('wall-feed');
+            const log = document.createElement('div');
+            log.style.cssText = "background: rgba(212,175,55,0.04); border-radius: 10px; padding: 12px; border: 1px solid rgba(212,175,55,0.15); animation: fadeIn 0.4s ease;";
+            
+            log.innerHTML = `
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gold-primary); margin-bottom: 4px; font-weight: 600;"><span>User Entry</span><span>Just Now</span></div>
+                <p style="font-size: 0.8rem; color: #e0e0e0; line-height: 1.4;">${escapeHTML(memo)}</p>
+            `;
+            feed.insertBefore(log, feed.firstChild);
+            input.value = '';
+            feed.scrollTop = 0;
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        }
+
+        // Particle Ambient Engine
+        function initAmbientEngine() {
+            canvas = document.getElementById('canvas-particles');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            
+            window.addEventListener('resize', resizeCanvas);
+            
+            for (let i = 0; i < 35; i++) {
+                particlesArray.push(new Particle());
+            }
+            animateParticles();
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.2 - 0.1;
+                this.speedY = Math.random() * -0.3 - 0.1; // Slow floating up orientation
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = '#d4af37';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+    </script>
 </body>
 </html>
